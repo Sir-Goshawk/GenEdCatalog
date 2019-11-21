@@ -1,0 +1,43 @@
+<resources>
+    <string name="app_name">GenEdCatalog</string>
+    <string name="Main_List_title">Welcome to Course Catalog</string>
+    <string name="Filter_Options">Filter Options: </string>
+    <string name="action_settings">Settings</string>
+    <string name="Course_banner">Avaliable Courses are: </string>
+    <string-array name="CourseTypes">
+        <item>ACP - Advanced Composition</item>
+        <item>Composition I</item>
+        <item>CS - Cultural Studies</item>
+            <item>  NW - Non-Western Culture(s)</item>
+            <item>  US - US Minority Cultures</item>
+            <item>  WCC - Western/Comparative Culture(s)</item>
+        <item>HUM - Humanities and the Arts</item>
+            <item>  HP - Historical and Philosophical Perspectives</item>
+            <item>  LA - Literature and the Arts</item>
+        <item>NAT - Natural Sciences and Technology</item>
+            <item>  LS - Life Sciences</item>
+            <item>  PS - Physical Sciences</item>
+        <item>QR - Quantitative Reasoning</item>
+            <item>  QR1 - Quantitative Reasoning I</item>
+            <item>  QR2 - Quantitative Reasoning II</item>
+        <item>SBS - Social and Behavioral Sciences</item>
+            <item>  BSC - Behavioral Sciences</item>
+            <item>  SS - Social Sciences</item>
+    </string-array>
+
+    <?xml version="1.0" encoding="utf-8"?>
+    <string name="Course_page_title"><b>Course Name</b></string>
+    <string name="GenEd_Type">GenEd Fullfillments</string>
+    <string name="Course_Type">Course Description</string>
+    <string name="Section_Code">Section Name</string>
+    <string name="Credit_Holder">Credit Hours</string>
+
+    <string name="Course_page_title_Example"><b>Western Civ Since 1660-ACP</b></string>
+    <string name="GenEd_Type_Example">ACP \nCS - WCC \nHUM - HP</string>
+    <string name="Course_Type_Example">
+Course is identical to HIST 142 except for the additional writing component.
+
+Credit is not given for both HIST 143 and HIST 142. Prerequisite: Completion of campus Composition I General Education requirement.</string>
+    <string name="Section_Code_Example">HIST 143</string>
+    <string name="Credit_Holder_Example">Credit Hours:\n4</string>
+</resources>
