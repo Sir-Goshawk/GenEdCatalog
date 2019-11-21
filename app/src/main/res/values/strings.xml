@@ -29,7 +29,7 @@
     <string name="Course_page_title"><b>Course Name</b></string>
     <string name="GenEd_Type">GenEd Fullfillments</string>
     <string name="Course_Type">Course Description</string>
-    <string name="Section_Code">Section Name</string>
+    <string name="Section_Code">Course Code</string>
     <string name="Credit_Holder">Credit Hours</string>
 
     <string name="Course_page_title_Example"><b>Western Civ Since 1660-ACP</b></string>
