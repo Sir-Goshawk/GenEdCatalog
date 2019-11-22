@@ -40,4 +40,21 @@ Course is identical to HIST 142 except for the additional writing component.
 Credit is not given for both HIST 143 and HIST 142. Prerequisite: Completion of campus Composition I General Education requirement.</string>
     <string name="Section_Code_Example">HIST 143</string>
     <string name="Credit_Holder_Example">Credit Hours:\n4</string>
+
+    <string name="Term">Term Holder</string>
+    <string name="Linked_Course_Banner_Title">Title</string>
+    <string name="Linked_Course_Banner_CRN">CRN</string>
+    <string name="Linked_Course_Banner_Instructor">Instructor</string>
+    <string name="Linked_Course_Banner_Meeting_Times">Meeting Times</string>
+    <string name="Linked_Course_Banner_Status">Status</string>
+
+    <string name="Term_Example">Spring 2020</string>
+
+    <string name="CRN_Holder">CRN Holder</string>
+    <string name="Instructor_Holder">Instructor Holder</string>
+    <string name="Meeting_Time_Holder">Meeting Time Holder</string>
+
+    <string name="CRN_Holder_Example">35125</string>
+    <string name="Instructor_Holder_Example">Last, First</string>
+    <string name="Meeting_Time_Holder_Example">03:00PM - 3:50PM <b>Building: </b> Foellinger Auditorium</string>
 </resources>
