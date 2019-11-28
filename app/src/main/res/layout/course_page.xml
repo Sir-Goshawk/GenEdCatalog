@@ -93,4 +93,10 @@
             android:text="@string/Linked_Course_Banner_Status" />
     </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/LinkedSecionList"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"></LinearLayout>
+
 </LinearLayout>
