@@ -1,8 +1,10 @@
 package com.example.genedcatalog;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -24,14 +26,35 @@ public class MainList extends AppCompatActivity {
         //The actual chunk that will be filled with course information and added to the courseList
         View courseChunk = getLayoutInflater().inflate(R.layout.chunk_course, courseLists, false);
 
-        //Different containers and their contents to be filled;
-        TextView courseNameTitle = courseChunk.findViewById(R.id.CourseName);
-        TextView courseCode = courseChunk.findViewById(R.id.CourseCode);
-        TextView courseGenEdinfo = courseChunk.findViewById(R.id.AttributeHolder);
-        TextView courseDescription = courseChunk.findViewById(R.id.CourseDescription);
-        TextView courseCredit = courseChunk.findViewById(R.id.CreditHolder);
+        addChunkCourse(courseChunk,"History Class", "HIST141", "HP \n WW",
+                "THis is a description", 3);
     }
 
-    private void testAPI() {
+    private void goToCoursePage() {
+        Intent intent = new Intent(this, CoursePage.class);
+        startActivity(intent);
+    }
+
+    private void addChunkCourse(final View courseChunk, final String courseName,
+                                final String courseCode, final String courseGenEdInfo,
+                                final String courseDescription, final int courseCredit) {
+
+        //Different containers and their contents to be filled;
+        TextView courseNameHolder = courseChunk.findViewById(R.id.CourseName);
+        TextView courseCodeHolder = courseChunk.findViewById(R.id.CourseCode);
+        TextView courseGenEdinfoHolder = courseChunk.findViewById(R.id.AttributeHolder);
+        TextView courseDescriptionHolder = courseChunk.findViewById(R.id.CourseDescription);
+        TextView courseCreditHolder = courseChunk.findViewById(R.id.CreditHolder);
+        Button courseButton = courseChunk.findViewById(R.id.SelectCourse);
+
+        courseNameHolder.setText(courseName);
+        courseCodeHolder.setText(courseCode);
+        courseGenEdinfoHolder.setText(courseGenEdInfo);
+        courseDescriptionHolder.setText(courseDescription);
+        courseCreditHolder.setText(courseCredit);
+
+        courseButton.setOnClickListener(unused -> {
+            goToCoursePage();
+        });
     }
 }
