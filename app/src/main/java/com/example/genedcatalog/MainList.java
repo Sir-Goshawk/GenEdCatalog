@@ -10,28 +10,36 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-
 public class MainList extends AppCompatActivity {
 
     private static final String TAG = "MainList";
 
+    private LinearLayout courseLists;
+
     protected void onCreate(final Bundle savedInstanceState) {
-        Log.i(TAG, "Creating");
+        Log.i(TAG, "creating");
         // The "super" call is required for all activities
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.main_list);
 
         //The Vertical Linear Layout that will hold course chunks
-        LinearLayout courseLists = findViewById(R.id.CourseChunks);
+        courseLists = findViewById(R.id.CourseChunks);
 
         //The actual chunk that will be filled with course information and added to the courseList
         View courseChunk = getLayoutInflater().inflate(R.layout.chunk_course, courseLists, false);
 
-        addChunkCourse(courseChunk,"History Class", "HIST141", "HP \n WW",
+        addChunkCourse(courseChunk,"History Class", "HIST141", "HP \nWW",
                 "THis is a description", 3);
     }
-
-    private void goToCoursePage() {
+    private void goToCoursePage(final String courseName, final String courseCode,
+                                final String courseGenEdInfo, final String courseDescription,
+                                final int courseCredit) {
         Intent intent = new Intent(this, CoursePage.class);
+        intent.putExtra("courseName", courseName);
+        intent.putExtra("courseCode", courseCode);
+        intent.putExtra("courseGenEdInfo", courseGenEdInfo);
+        intent.putExtra("courseDescription", courseDescription);
+        intent.putExtra("courseCredit", courseCredit + "");
         startActivity(intent);
     }
 
@@ -51,10 +59,11 @@ public class MainList extends AppCompatActivity {
         courseCodeHolder.setText(courseCode);
         courseGenEdinfoHolder.setText(courseGenEdInfo);
         courseDescriptionHolder.setText(courseDescription);
-        courseCreditHolder.setText(courseCredit);
+        courseCreditHolder.setText("" + courseCredit);
 
         courseButton.setOnClickListener(unused -> {
-            goToCoursePage();
+            goToCoursePage(courseName, courseCode, courseGenEdInfo, courseDescription, courseCredit);
         });
+        courseLists.addView(courseChunk);
     }
 }

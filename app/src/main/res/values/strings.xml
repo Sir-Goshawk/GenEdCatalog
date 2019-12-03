@@ -25,7 +25,6 @@
             <item>  SS - Social Sciences</item>
     </string-array>
 
-    <?xml version="1.0" encoding="utf-8"?>
     <string name="Course_page_title"><b>Course Name</b></string>
     <string name="GenEd_Type">GenEd Fullfillments</string>
     <string name="Course_Type">Course Description</string>
