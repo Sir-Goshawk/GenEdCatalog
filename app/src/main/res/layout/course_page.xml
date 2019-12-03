@@ -46,10 +46,50 @@
         android:text="@string/GenEd_Type" />
 
     <View
+        android:id="@+id/divider"
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:background="@android:color/background_dark" />
+
+    <LinearLayout
+        android:id="@+id/SelectedSectionDisplay"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/SelectedSectionBanner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/Selected_Lecture_Section" />
+
+        <TextView
+            android:id="@+id/NonSelectedSection"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/Non_Selected_Section" />
+    </LinearLayout>
+
+    <View
         android:id="@+id/divider2"
         android:layout_width="match_parent"
         android:layout_height="5dp"
         android:background="#090808" />
+
+    <TextView
+        android:id="@+id/SectionBanner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/Linked_List_Banner" />
+
+    <View
+        android:id="@+id/divider4"
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:background="@android:color/darker_gray" />
 
     <LinearLayout
         android:id="@+id/LinkedBanner"

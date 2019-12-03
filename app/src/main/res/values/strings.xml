@@ -51,13 +51,19 @@ Credit is not given for both HIST 143 and HIST 142. Prerequisite: Completion of 
 
     <string name="Term_Example">Spring 2020</string>
 
+    <string name="Selected_Lecture_Section">Selected Section:</string>
+    <string name="Non_Selected_Section">No Lecture Section Currently Selected</string>
     <string name="Section_Code_Holder">Section Code</string>
+    <string name="Section_Type">Section Type</string>
     <string name="CRN_Holder">CRN Holder</string>
     <string name="Instructor_Holder">Instructor Holder</string>
     <string name="Meeting_Time_Holder">Meeting Time Holder</string>
+    <string name="Linked_List_Banner">Open Sections:</string>
+    <string name="Deselect_Button">Deselect</string>
 
     <string name="Section_Name_Example">HIST 141</string>
     <string name="Section_Code_Holder_Example">ADD</string>
+    <string name="Section_Type_Example">Discussion/Recitiation</string>
     <string name="CRN_Holder_Example">35125</string>
     <string name="Instructor_Holder_Example">Last, First</string>
     <string name="Meeting_Time_Holder_Example">03:00PM - 3:50PM \n<b> Foellinger Auditorium</b></string>
