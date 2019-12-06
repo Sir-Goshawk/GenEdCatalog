@@ -1,5 +1,6 @@
 package com.example.genedcatalog;
 
+import android.app.DownloadManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -9,6 +10,13 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 
 public class MainList extends AppCompatActivity {
 
@@ -30,7 +38,38 @@ public class MainList extends AppCompatActivity {
 
         addChunkCourse(courseChunk,"History Class", "HIST141", "HP \nWW",
                 "THis is a description", 3);
+
+        TextView mainTitleHolder = findViewById(R.id.MainTitle);
+
+        // Instantiate the RequestQueue.
+            RequestQueue queue = Volley.newRequestQueue(this);
+//            String url ="http://courses.illinois.edu/cisapp/explorer/schedule/:year";
+//            String url ="http://courses.illinois.edu/cisapi/schedule";
+            String url ="http://courses.illinois.edu/cisapp/explorer/schedule/:year/:semester/:subjectCode";
+//            String url ="http://www.google.com";
+
+        Log.d("error", "Message is calle");
+        // Request a string response from the provided URL.
+            StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+                    new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+                            // Display the first 500 characters of the response string.
+                            Log.d("call", "the error is "+response);
+//                            mainTitleHolder.setText("Response is: "+ response.substring(0,50));
+                        }
+                    }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Log.d("call", "the error is "+error);
+                    mainTitleHolder.setText("That didn't work!");
+                }
+            });
+
+        // Add the request to the RequestQueue.
+            queue.add(stringRequest);
     }
+
     private void goToCoursePage(final String courseName, final String courseCode,
                                 final String courseGenEdInfo, final String courseDescription,
                                 final int courseCredit) {

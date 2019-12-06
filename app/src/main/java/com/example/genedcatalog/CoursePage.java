@@ -84,6 +84,7 @@ public class CoursePage extends AppCompatActivity {
         });
 
         linkedSectionList.addView(linkedChunk);
+        Log.d("Called", "" + linkedSectionList.getChildCount());
     }
 
     private void selectedCourse(final View linkChunk, final String sectionName,
@@ -103,6 +104,17 @@ public class CoursePage extends AppCompatActivity {
         addChunkBanner(selectedChunk, linkChunk, sectionName, CRNCode, sectionType, MeetingTime, instructorName);
     }
 
+    /**
+     * This fills linked sections for the selected lecture,
+     * and adds the lecture chunk to the top
+     * @param selectedChunk
+     * @param linkedChunk
+     * @param sectionName
+     * @param CRNCode
+     * @param sectionType
+     * @param MeetingTime
+     * @param instructorName
+     */
     private void addChunkBanner(final View selectedChunk, final View linkedChunk,
                                 final String sectionName, final int CRNCode, final String sectionType,
                                 final String MeetingTime, final String instructorName) {
@@ -124,9 +136,9 @@ public class CoursePage extends AppCompatActivity {
 
         //If the section type is a lecture, then there's no need to deselect
         selectButton.setVisibility(View.GONE);
-
+//        selectedCourse(linkedChunk, "ADD", 531975, "Discussion/Recitation", "11-12AM TT", "first, last");
         deselectButton.setOnClickListener(unused -> {
-            selectedCourse(linkedChunk, "ADD", 531975, "Discussion/Recitation", "11-12AM TT", "first, last");
+//            selectedSectionLayout.removeView(selectedChunk);
         });
 
         selectedSectionLayout.addView(selectedChunk);

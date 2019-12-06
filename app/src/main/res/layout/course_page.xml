@@ -136,15 +136,15 @@
     <LinearLayout
         android:id="@+id/LinkedSecionList"
         android:layout_width="match_parent"
-        android:layout_height="5dp"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
 
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/SelectLectureSection"
+        android:id="@+id/LectureList"
         android:layout_width="match_parent"
-        android:layout_height="5dp"
+        android:layout_height="wrap_content"
         android:orientation="vertical"></LinearLayout>
 
 </LinearLayout>
