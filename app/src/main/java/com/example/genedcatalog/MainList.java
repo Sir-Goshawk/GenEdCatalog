@@ -19,6 +19,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.XML;
@@ -58,12 +59,14 @@ public class MainList extends AppCompatActivity {
                     public void onResponse(String response) {
                         // Display the first 500 characters of the response string.
                         JSONObject res = new JSONObject();
+                        JSONObject resFall2020;
                         try {
                             res = XML.toJSONObject(response);
-                            Log.d("mine", "the response is "+res.getJSONObject("ns2:calendarYear").getJSONObject("terms").getJSONArray("term");
+                            resFall2020 = res.getJSONObject("ns2:calendarYear").getJSONObject("terms").getJSONArray("term").getJSONObject(2).getJSONObject("href");
                         } catch (JSONException e) {
                             Log.d("mine", e +"");
                         }
+
 //                            mainTitleHolder.setText("Response is: "+ response.substring(0,50));
                     }
                 }, new Response.ErrorListener() {
