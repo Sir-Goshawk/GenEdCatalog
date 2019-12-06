@@ -19,7 +19,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
-
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.XML;
 
@@ -57,8 +57,13 @@ public class MainList extends AppCompatActivity {
                     @Override
                     public void onResponse(String response) {
                         // Display the first 500 characters of the response string.
-                        JSONObject res = XML.toJSONObject(response);
-                        Log.d("mine", "the response is "+res.toString());
+                        JSONObject res = new JSONObject();
+                        try {
+                            res = XML.toJSONObject(response);
+                        } catch (JSONException e) {
+                            Log.d("mine", e +"");
+                        }
+                        Log.d("mine", "the response is "+res.get(""));
 //                            mainTitleHolder.setText("Response is: "+ response.substring(0,50));
                     }
                 }, new Response.ErrorListener() {
