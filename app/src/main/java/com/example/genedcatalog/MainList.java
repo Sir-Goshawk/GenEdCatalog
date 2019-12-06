@@ -15,8 +15,13 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+
+
+import org.json.JSONObject;
+import org.json.XML;
 
 public class MainList extends AppCompatActivity {
 
@@ -41,33 +46,30 @@ public class MainList extends AppCompatActivity {
 
         TextView mainTitleHolder = findViewById(R.id.MainTitle);
 
-        // Instantiate the RequestQueue.
-            RequestQueue queue = Volley.newRequestQueue(this);
-//            String url ="http://courses.illinois.edu/cisapp/explorer/schedule/:year";
-            String url ="http://courses.illinois.edu/cisapp/explorer/schedule.xml";
-//            String url ="http://courses.illinois.edu/cisapp/explorer/schedule/:year/:semester/:subjectCode";
-//            String url ="http://www.google.com";
+//        Instantiate the RequestQueue.
+        RequestQueue queue = Volley.newRequestQueue(this);
+        String url ="http://courses.illinois.edu/cisapp/explorer/schedule.xml";
 
-        Log.d("mine", "Message is calle");
+        Log.d("mine", "Message is called");
         // Request a string response from the provided URL.
-            StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
-                    new Response.Listener<String>() {
-                        @Override
-                        public void onResponse(String response) {
-                            // Display the first 500 characters of the response string.
-                            Log.d("mine", "the response is "+response);
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        // Display the first 500 characters of the response string.
+                        JSONObject res = XML.toJSONObject(response);
+                        Log.d("mine", "the response is "+res.toString());
 //                            mainTitleHolder.setText("Response is: "+ response.substring(0,50));
-                        }
-                    }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    Log.d("mine", "the error is "+error);
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("mine", "the error is "+error);
 //                    mainTitleHolder.setText("That didn't work!");
-                }
-            });
-
+            }
+        });
         // Add the request to the RequestQueue.
-            queue.add(stringRequest);
+        queue.add(stringRequest);
     }
 
     private void goToCoursePage(final String courseName, final String courseCode,
@@ -105,4 +107,6 @@ public class MainList extends AppCompatActivity {
         });
         courseLists.addView(courseChunk);
     }
+
+
 }
