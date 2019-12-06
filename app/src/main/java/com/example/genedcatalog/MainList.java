@@ -44,25 +44,25 @@ public class MainList extends AppCompatActivity {
         // Instantiate the RequestQueue.
             RequestQueue queue = Volley.newRequestQueue(this);
 //            String url ="http://courses.illinois.edu/cisapp/explorer/schedule/:year";
-//            String url ="http://courses.illinois.edu/cisapi/schedule";
-            String url ="http://courses.illinois.edu/cisapp/explorer/schedule/:year/:semester/:subjectCode";
+            String url ="http://courses.illinois.edu/cisapp/explorer/schedule.xml";
+//            String url ="http://courses.illinois.edu/cisapp/explorer/schedule/:year/:semester/:subjectCode";
 //            String url ="http://www.google.com";
 
-        Log.d("error", "Message is calle");
+        Log.d("mine", "Message is calle");
         // Request a string response from the provided URL.
             StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
                     new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
                             // Display the first 500 characters of the response string.
-                            Log.d("call", "the error is "+response);
+                            Log.d("mine", "the response is "+response);
 //                            mainTitleHolder.setText("Response is: "+ response.substring(0,50));
                         }
                     }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
-                    Log.d("call", "the error is "+error);
-                    mainTitleHolder.setText("That didn't work!");
+                    Log.d("mine", "the error is "+error);
+//                    mainTitleHolder.setText("That didn't work!");
                 }
             });
 
