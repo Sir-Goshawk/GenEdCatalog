@@ -60,10 +60,10 @@ public class MainList extends AppCompatActivity {
                         JSONObject res = new JSONObject();
                         try {
                             res = XML.toJSONObject(response);
+                            Log.d("mine", "the response is "+res.getJSONObject("ns2:calendarYear").getJSONObject("terms").getJSONArray("term");
                         } catch (JSONException e) {
                             Log.d("mine", e +"");
                         }
-                        Log.d("mine", "the response is "+res.get(""));
 //                            mainTitleHolder.setText("Response is: "+ response.substring(0,50));
                     }
                 }, new Response.ErrorListener() {
