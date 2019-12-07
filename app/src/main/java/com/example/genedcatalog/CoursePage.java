@@ -23,34 +23,35 @@ public class CoursePage extends AppCompatActivity {
 
     protected void onCreate(final Bundle savedInstanceState) {
 //        Log.i(TAG, "Creating");
-        // The "super" call is required for all activities
+        //The "super" call is required for all activities
         super.onCreate(savedInstanceState);
         setContentView(R.layout.course_page);
 
-
-        linkedSectionList = findViewById(R.id.LinkedSecionList);
-
-        //The Vertical Linear Layout that will display a selected Lecture Section
+        //The vertical linear layout that will display a selected Lecture Section
         selectedSectionLayout = findViewById(R.id.SelectedSectionDisplay);
+
+        //The vertical linear layout that will display the linked sections to the lecture selected
+        linkedSectionList = findViewById(R.id.LinkedSecionList);
 
         courseInfo = getIntent();
 
-
+        //Textviews for the course details
         TextView courseName = findViewById(R.id.CourseNameHolder);
         TextView creditHour = findViewById(R.id.CreditHourHolder);
         TextView courseCode = findViewById(R.id.CourseCodeHolder);
         TextView courseTerm = findViewById(R.id.TermHolder);
         TextView GenEdHolder = findViewById(R.id.GenEdHolder);
 
+        //?
         courseName.setText(courseInfo.getStringExtra("courseName"));
         creditHour.setText(courseInfo.getStringExtra("courseCode"));
         courseCode.setText(courseInfo.getStringExtra("courseCredit"));
         GenEdHolder.setText(courseInfo.getStringExtra("courseGenEdInfo"));
 
-
         View linkedChunk = getLayoutInflater().inflate(R.layout.chunk_section, linkedSectionList, false);
 
-        addChunkLinked(linkedChunk, "AL3", 98532, "Lecture", "MWF 3-4PM", "First, Last");
+        //USED TO MAKE SURE UI WORKED
+//        addChunkLinked(linkedChunk, "AL3", 98532, "Lecture", "MWF 3-4PM", "First, Last");
 
     }
 

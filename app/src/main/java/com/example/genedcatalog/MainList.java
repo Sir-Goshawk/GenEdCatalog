@@ -30,34 +30,39 @@ public class MainList extends AppCompatActivity {
 
     private LinearLayout courseLists;
 
+    /**
+     * What shows up when the app first opens
+     * @param savedInstanceState ?
+     */
     protected void onCreate(final Bundle savedInstanceState) {
         Log.i(TAG, "creating");
-        // The "super" call is required for all activities
+        //The "super" call is required for all activities
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_list);
 
-        //The Vertical Linear Layout that will hold course chunks
-        courseLists = findViewById(R.id.CourseChunks);
-
-        //The actual chunk that will be filled with course information and added to the courseList
-        View courseChunk = getLayoutInflater().inflate(R.layout.chunk_course, courseLists, false);
-
-        addChunkCourse(courseChunk,"History Class", "HIST141", "HP \nWW",
-                "THis is a description", 3);
-
+        //Main title view
         TextView mainTitleHolder = findViewById(R.id.MainTitle);
 
-//        Instantiate the RequestQueue.
+        //The vertical linear layout that will hold course chunks
+        courseLists = findViewById(R.id.CourseChunks);
+
+        //The actual chunk that will be filled with course information and added to the course list
+        View courseChunk = getLayoutInflater().inflate(R.layout.chunk_course, courseLists, false);
+
+        //USED TO MAKE SURE UI WORKED: Testing to see if a course chunk will add to the list
+//        addChunkCourse(courseChunk,"History Class", "HIST141", "HP \nWW",
+//                "THis is a description", 3);
+
+        //Instantiate the RequestQueue--gets the Course Explorer API
         RequestQueue queue = Volley.newRequestQueue(this);
         String url ="http://courses.illinois.edu/cisapp/explorer/schedule.xml";
 
         Log.d("mine", "Message is called");
-        // Request a string response from the provided URL.
+        //Request a string response from the provided URL
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        // Display the first 500 characters of the response string.
                         JSONObject res = new JSONObject();
                         JSONObject resFall2020;
                         try {
@@ -66,20 +71,19 @@ public class MainList extends AppCompatActivity {
                         } catch (JSONException e) {
                             Log.d("mine", e +"");
                         }
-
-//                            mainTitleHolder.setText("Response is: "+ response.substring(0,50));
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.d("mine", "the error is "+error);
-//                    mainTitleHolder.setText("That didn't work!");
             }
         });
+
         // Add the request to the RequestQueue.
         queue.add(stringRequest);
     }
 
+    //FOLLOWING TWO FUNCTIONS TESTED TO MAKE SURE UI WORKED (kinda...)
     private void goToCoursePage(final String courseName, final String courseCode,
                                 final String courseGenEdInfo, final String courseDescription,
                                 final int courseCredit) {
