@@ -45,6 +45,12 @@
         android:gravity="center"
         android:text="@string/GenEd_Type" />
 
+    <TextView
+        android:id="@+id/CourseDescriptionHolder"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Course Description" />
+
     <View
         android:id="@+id/divider"
         android:layout_width="match_parent"

@@ -26,6 +26,7 @@ import org.json.JSONObject;
 import org.json.XML;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 public class MainList extends AppCompatActivity {
@@ -33,6 +34,9 @@ public class MainList extends AppCompatActivity {
     private static final String TAG = "MainList";
 
     private LinearLayout courseLists;
+
+    //List of courses from API
+    private List courseListFromAPI = new ArrayList<Course>();
 
     private JSONObject toReturn;
 
@@ -83,23 +87,17 @@ public class MainList extends AppCompatActivity {
             Log.d("mine", url + " " + error + "code " + statusCode);});
         queue.add(stringRequest);
 //        requestAPI(url, new JSONObject());
+
+        //Loop through list of courses retrieved from API to populate course chunks on main page
+        for (int i = 0; i < courseListFromAPI.size(); i++) {
+            Course course = (Course) courseListFromAPI.get(i);
+            addChunkCourse(courseChunk, course.getName(), course.getCode(), course.getGenEdInfo(), course.getDescription(), course.getCredit());
+        }
     }
 
-    //FOLLOWING TWO FUNCTIONS TESTED TO MAKE SURE UI WORKED (kinda...)
-    private void goToCoursePage(final String courseName, final String courseCode,
-                                final String courseGenEdInfo, final String courseDescription,
-                                final int courseCredit) {
-        Intent intent = new Intent(this, CoursePage.class);
-        intent.putExtra("courseName", courseName);
-        intent.putExtra("courseCode", courseCode);
-        intent.putExtra("courseGenEdInfo", courseGenEdInfo);
-        intent.putExtra("courseDescription", courseDescription);
-        intent.putExtra("courseCredit", courseCredit + "");
-        startActivity(intent);
-    }
-
+    //Function to be used to populate course chunks
     private void addChunkCourse(final View courseChunk, final String courseName,
-                                final String courseCode, final String courseGenEdInfo,
+                                final int courseCode, final String courseGenEdInfo,
                                 final String courseDescription, final int courseCredit) {
 
         //Different containers and their contents to be filled;
@@ -117,9 +115,29 @@ public class MainList extends AppCompatActivity {
         courseCreditHolder.setText("" + courseCredit);
 
         courseButton.setOnClickListener(unused -> {
-            goToCoursePage(courseName, courseCode, courseGenEdInfo, courseDescription, courseCredit);
+            goToCoursePage(courseName, courseCredit, courseCode, courseGenEdInfo, courseDescription);
         });
         courseLists.addView(courseChunk);
+    }
+
+    //Transfers info to course page
+    private void goToCoursePage(final String courseName, final int courseCredit, final int courseCode,
+                                final String courseGenEdInfo, final String courseDescription) {
+        Intent intent = new Intent(this, CoursePage.class);
+        intent.putExtra("courseName", courseName);
+        intent.putExtra("courseCredit", courseCredit + "");
+        intent.putExtra("courseCode", courseCode);
+        intent.putExtra("courseGenEdInfo", courseGenEdInfo);
+        intent.putExtra("courseDescription", courseDescription);
+        for (int i = 0; i < courseListFromAPI.size(); i++) {
+            Course course = (Course) courseListFromAPI.get(i);
+            ArrayList<String> courseSectionList = course.getCourseSection();
+            for (int j = 0; j < courseSectionList.size(); j++) {
+                String courseSection = courseSectionList.get(j);
+                intent.putExtra("courseSection", courseSection);
+            }
+        }
+        startActivity(intent);
     }
 
     private String removeBackSlash(String toEdit) {
