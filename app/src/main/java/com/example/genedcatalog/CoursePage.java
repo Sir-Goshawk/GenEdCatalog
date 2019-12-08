@@ -10,7 +10,18 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.json.XML;
+
 import java.util.ArrayList;
+import java.util.Iterator;
 
 
 public class CoursePage extends AppCompatActivity {
@@ -22,6 +33,8 @@ public class CoursePage extends AppCompatActivity {
     private LinearLayout selectedSectionLayout;
 
     private Intent courseInfo;
+
+    private ArrayList<String> courseSectionsList = new ArrayList<>();
 
     /**
      * What shows up when the app first opens
@@ -53,17 +66,21 @@ public class CoursePage extends AppCompatActivity {
         courseName.setText(courseInfo.getStringExtra("courseName"));
         courseCode.setText(courseInfo.getStringExtra("courseCredit"));
         creditHour.setText(courseInfo.getStringExtra("courseCode"));
-        GenEdHolder.setText(courseInfo.getStringExtra("courseGenEdInfo"));
+        ArrayList<String> getGenEdNames = courseInfo.getStringArrayListExtra("courseGenEdNames");
+        String genEdNames = "";
+        for (int i = 0; i < getGenEdNames.size(); i++) {
+            genEdNames += getGenEdNames.get(i) +"\n";
+        }
+        GenEdHolder.setText(genEdNames);
         courseDescriptionHolder.setText(courseInfo.getStringExtra("courseDescription"));
 
         //Adding course sections retrieved from main list into a new array to access the sections to population the chunks later
-        ArrayList<String> courseSectionsList = new ArrayList<>();
-        courseSectionsList.add(courseInfo.getStringExtra("courseSection"));
-
+        ArrayList<String> getCourseSectionsList = courseInfo.getStringArrayListExtra("courseSection");
         //Populating course section chunks--NEED API FIRST BC THIS USES IT
-//        for (int i = 0; i < courseSectionsList.size(); i++) {
-//            addChunkBanner(null, null, ...............);
-//        }
+        for (int i = 0; i < getCourseSectionsList.size(); i++) {
+            requestAPI(getCourseSectionsList.get(i));
+//            addChunkBanner();
+        }
 
 
 
@@ -74,7 +91,6 @@ public class CoursePage extends AppCompatActivity {
     /**
      * The code to fill in the course section chunks.
      * The code to also add the selected lecture chunk to the selected sections layout.
-     * @param selectedChunk chunk for the selected lecture section
      * @param linkedChunk chunk for the linked sections of the selected lecture
      * @param sectionName the name of the selected course
      * @param sectionType the section type (lecture/discussion/lab)
@@ -83,9 +99,11 @@ public class CoursePage extends AppCompatActivity {
      * @param instructorName the instructor the course
      * @param MeetingTime the times there are class for this course
      */
-    private void addChunkBanner(final View selectedChunk, final View linkedChunk,
+    private void addChunkBanner(final View linkedChunk,
                                 final String sectionName, final String sectionType, final int sectionCode,
                                 final int CRNCode, final String instructorName, final String MeetingTime) {
+
+        View selectedChunk = getLayoutInflater().inflate(R.layout.chunk_section, linkedSectionLayout, false);
         //Different containers and their contents to be filled;
         TextView sectionNameHolder = selectedChunk.findViewById(R.id.SectionName);
         TextView sectionTypeHolder = selectedChunk.findViewById(R.id.sectionType);
@@ -132,7 +150,6 @@ public class CoursePage extends AppCompatActivity {
     /**
      * The code to fill in the linked section chunks.
      * The code to also add the selected linked chunk to the selected sections layout.
-     * @param linkedChunk chunk for the linked sections
      * @param sectionName the name of the linked course
      * @param sectionType the section type (lecture/discussion/lab)
      * @param sectionCode the code of the linked course (i.e. would be 125 in CS 125)
@@ -140,9 +157,10 @@ public class CoursePage extends AppCompatActivity {
      * @param instructorName the instructor the course
      * @param MeetingTime the times there are class for this course
      */
-    private void addChunkLinked(final View linkedChunk, final String sectionName,
+    private void addChunkLinked(final String sectionName,
                                 final String sectionType, final int sectionCode, final int CRNCode,
                                 final String instructorName, final String MeetingTime) {
+        View linkedChunk = getLayoutInflater().inflate(R.layout.chunk_section, linkedSectionLayout, false);
         //Different containers and their contents to be filled;
         TextView sectionNameHolder = linkedChunk.findViewById(R.id.SectionName);
         TextView sectionTypeHolder = linkedChunk.findViewById(R.id.sectionType);
@@ -211,6 +229,29 @@ public class CoursePage extends AppCompatActivity {
 
         //Add new chunks of linked discussion sections
         View linkedChunk = getLayoutInflater().inflate(R.layout.chunk_section, linkedSectionLayout, false);
-        addChunkLinked(linkedChunk, sectionName, sectionType, sectionCode, CRNCode, instructorName, MeetingTime);
+        addChunkLinked(sectionName, sectionType, sectionCode, CRNCode, instructorName, MeetingTime);
+    }
+
+    private void requestAPI(final String url) {
+
+        if (url == null) {
+            throw new IllegalArgumentException();
+        }
+        //Instantiate the RequestQueue--gets the Course Explorer API
+        RequestQueue queue = Volley.newRequestQueue(this);
+
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url, response -> {
+            try {
+                JSONObject requestedJSONObj = XML.toJSONObject(response);
+
+                //first JSON node of the given lastResponse
+                Iterator<String> keys = requestedJSONObj.keys();
+                String firstNode = keys.next();
+                Log.d("mine", requestedJSONObj.toString(2));
+            } catch (JSONException e) {
+                Log.d("mine", "error is " + e);
+            }
+        }, error -> { Log.d("mine", "error web " + error); });
+        queue.add(stringRequest);
     }
 }

@@ -1,6 +1,5 @@
 package com.example.genedcatalog;
 
-import android.app.DownloadManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -26,7 +25,6 @@ import org.json.XML;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 
 public class MainList extends AppCompatActivity {
 
@@ -40,7 +38,6 @@ public class MainList extends AppCompatActivity {
     private String urlBASEstart = "http://courses.illinois.edu/cisapp/explorer/schedule/2020/spring/";
 
     private String urlBASEend = ".xml";
-
 
     /**
      * What shows up when the app first opens
@@ -95,19 +92,14 @@ public class MainList extends AppCompatActivity {
     //Transfers info to course page
     private void goToCoursePage(final Course toAdd) {
         Intent intent = new Intent(this, CoursePage.class);
+        Log.d("mine coursePage", toAdd.toString());
         intent.putExtra("courseName", toAdd.getName());
         intent.putExtra("courseCredit", toAdd.getCredit());
         intent.putExtra("courseCode", toAdd.getCode());
         intent.putExtra("courseGenEdInfo", toAdd.getGenEdInfo());
         intent.putExtra("courseDescription", toAdd.getDescription());
-        for (int i = 0; i < courseListFromAPI.size(); i++) {
-            Course course = (Course) courseListFromAPI.get(i);
-            ArrayList<String> courseSectionList = course.getCourseSection();
-            for (int j = 0; j < courseSectionList.size(); j++) {
-                String courseSection = courseSectionList.get(j);
-                intent.putExtra("courseSection", courseSection);
-            }
-        }
+        intent.putExtra("courseSection", toAdd.getCourseSection());
+        intent.putExtra("courseGenEdNames", toAdd.getGenEdNames());
         startActivity(intent);
     }
 
@@ -164,20 +156,22 @@ public class MainList extends AppCompatActivity {
                                 subject.add(subJSON.getJSONObject("sections").getJSONObject("section").getString("href"));
                             }
 
-                            String genEd = "";
+                            ArrayList<String> genEd = new ArrayList<>();
+                            ArrayList<String> genEdNames = new ArrayList<>();
                             try {
                                 for (int i = 0; i < subJSON.getJSONObject("genEdCategories").getJSONArray("category").length(); i++) {
-                                    genEd += subJSON.getJSONObject("genEdCategories").getJSONArray("category").getJSONObject(i).getString("id") + "\n";
+                                    genEd.add(subJSON.getJSONObject("genEdCategories").getJSONArray("category").getJSONObject(i).getString("id"));
+                                    genEdNames.add(subJSON.getJSONObject("genEdCategories").getJSONArray("category").getJSONObject(i).getJSONObject("ns2:genEdAttributes").getJSONObject("genEdAttribute").getString("content"));
                                 }
                             } catch (JSONException e) {
-                                genEd += subJSON.getJSONObject("genEdCategories").getJSONObject("category").getString("id") + "\n";
+                                genEd.add(subJSON.getJSONObject("genEdCategories").getJSONObject("category").getString("id"));
+                                genEdNames.add(subJSON.getJSONObject("genEdCategories").getJSONObject("ns2:genEdAttributes").getString("genEdAttribute"));
                             }
 
-                            Course toAdd = new Course(subJSON.getString("label"),
-                                    subJSON.getString("id"),
-                                    genEd,
+                            Course toAdd = new Course(subJSON.getString("label"),subJSON.getString("id"),genEd,
                                     subJSON.getString("description"),
-                                    Integer.parseInt(subJSON.getString("creditHours").substring(0, 1)), subject);
+                                    Integer.parseInt(subJSON.getString("creditHours").substring(0, 1)), subject, genEdNames
+                                    );
                             addChunkCourse(toAdd);
                         }
                     } catch (JSONException e) {}
