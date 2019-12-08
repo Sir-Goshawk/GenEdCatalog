@@ -34,8 +34,6 @@ public class CoursePage extends AppCompatActivity {
 
     private Intent courseInfo;
 
-    private ArrayList<String> courseSectionsList = new ArrayList<>();
-
     /**
      * What shows up when the app first opens
      * @param savedInstanceState ?
@@ -79,7 +77,6 @@ public class CoursePage extends AppCompatActivity {
         //Populating course section chunks--NEED API FIRST BC THIS USES IT
         for (int i = 0; i < getCourseSectionsList.size(); i++) {
             requestAPI(getCourseSectionsList.get(i));
-//            addChunkBanner();
         }
 
 
@@ -91,7 +88,6 @@ public class CoursePage extends AppCompatActivity {
     /**
      * The code to fill in the course section chunks.
      * The code to also add the selected lecture chunk to the selected sections layout.
-     * @param linkedChunk chunk for the linked sections of the selected lecture
      * @param sectionName the name of the selected course
      * @param sectionType the section type (lecture/discussion/lab)
      * @param sectionCode the code of the selected course (i.e. would be 125 in CS 125)
@@ -99,10 +95,8 @@ public class CoursePage extends AppCompatActivity {
      * @param instructorName the instructor the course
      * @param MeetingTime the times there are class for this course
      */
-    private void addChunkBanner(final View linkedChunk,
-                                final String sectionName, final String sectionType, final int sectionCode,
-                                final int CRNCode, final String instructorName, final String MeetingTime) {
-
+    private void addChunkBanner(final String sectionName, final String sectionType, final String sectionCode,
+                                final String CRNCode, final String instructorName, final String MeetingTime) {
         View selectedChunk = getLayoutInflater().inflate(R.layout.chunk_section, linkedSectionLayout, false);
         //Different containers and their contents to be filled;
         TextView sectionNameHolder = selectedChunk.findViewById(R.id.SectionName);
@@ -128,8 +122,7 @@ public class CoursePage extends AppCompatActivity {
 
         //If a section is selected...
         selectButton.setOnClickListener(unused -> {
-            selectedCourse(selectedChunk, linkedChunk, sectionName, sectionType,
-                    sectionCode, CRNCode, instructorName, MeetingTime);
+            selectedCourse(sectionName, sectionType, sectionCode, CRNCode, instructorName, MeetingTime);
             deselectButton.setVisibility(View.VISIBLE);
             deselectButton.setOnClickListener(u -> {
                 //remove the selected section
@@ -143,8 +136,8 @@ public class CoursePage extends AppCompatActivity {
             });
         });
 
-        //USED TO MAKE SURE UI WORKED
-//        selectedCourse(linkedChunk, "ADD", 531975, "Discussion/Recitation", "11-12AM TT", "first, last");
+        Log.d("mine added chunk", sectionName+" - "+sectionType+" - "+sectionCode+" - " + CRNCode+" - "+instructorName+" - "+MeetingTime);
+        linkedSectionLayout.addView(selectedChunk);
     }
 
     /**
@@ -157,8 +150,7 @@ public class CoursePage extends AppCompatActivity {
      * @param instructorName the instructor the course
      * @param MeetingTime the times there are class for this course
      */
-    private void addChunkLinked(final String sectionName,
-                                final String sectionType, final int sectionCode, final int CRNCode,
+    private void addChunkLinked(final String sectionName, final String sectionType, final String sectionCode, final String CRNCode,
                                 final String instructorName, final String MeetingTime) {
         View linkedChunk = getLayoutInflater().inflate(R.layout.chunk_section, linkedSectionLayout, false);
         //Different containers and their contents to be filled;
@@ -208,8 +200,6 @@ public class CoursePage extends AppCompatActivity {
 
     /**
      * Runs when a course is selected.
-     * @param selectedSection chunk for the selected lecture section
-     * @param linkedSection chunk for the linked sections
      * @param sectionName the name of the selected course
      * @param sectionType the section type (lecture/discussion/lab)
      * @param sectionCode the code of the selected course (i.e. would be 125 in CS 125)
@@ -217,9 +207,11 @@ public class CoursePage extends AppCompatActivity {
      * @param instructorName the instructor the course
      * @param MeetingTime the times there are class for this course
      */
-    private void selectedCourse(final View selectedSection, final View linkedSection, final String sectionName,
-                                final String sectionType, final int sectionCode, final int CRNCode,
+    private void selectedCourse(final String sectionName,
+                                final String sectionType, final String sectionCode, final String CRNCode,
                                 final String instructorName, final String MeetingTime) {
+
+        View selectedSection = getLayoutInflater().inflate(R.layout.chunk_section, selectedSectionLayout, false);
         //If a lecture section is selected then you do not have to display the banner
         TextView nonSelectedLectureHolder = findViewById(R.id.NonSelectedSection);
         nonSelectedLectureHolder.setVisibility(View.INVISIBLE);
@@ -247,9 +239,32 @@ public class CoursePage extends AppCompatActivity {
                 //first JSON node of the given lastResponse
                 Iterator<String> keys = requestedJSONObj.keys();
                 String firstNode = keys.next();
-                Log.d("mine", requestedJSONObj.toString(2));
+                requestedJSONObj = requestedJSONObj.getJSONObject(firstNode);
+//                Log.d("mine", requestedJSONObj.toString(2));
+
+                String instructor = "";
+                try {
+                    instructor = requestedJSONObj.getJSONObject("meetings").getJSONObject("meeting").getJSONObject("instructors").getJSONObject("instructor").getString("content");
+                } catch (JSONException e) {
+                    instructor = requestedJSONObj.getJSONObject("meetings").getJSONObject("meeting").getJSONObject("instructors").getString("instructor");
+                }
+
+                if (requestedJSONObj.getJSONObject("meetings").getJSONObject("meeting").getJSONObject("type").getString("content").equals("Lecture")) {
+                    if (requestedJSONObj.getJSONObject("meetings").getJSONObject("meeting").getJSONObject("type").getString("content").equals("Online")) {
+                        addChunkBanner(requestedJSONObj.getJSONObject("parents").getJSONObject("course").getString("content"),
+                                requestedJSONObj.getJSONObject("meetings").getJSONObject("meeting").getJSONObject("type").getString("content"),
+                                requestedJSONObj.getString("sectionNumber"), requestedJSONObj.getString("id"), instructor, "Online");
+                    } else {
+                        addChunkBanner(requestedJSONObj.getJSONObject("parents").getJSONObject("course").getString("content"),
+                                requestedJSONObj.getJSONObject("meetings").getJSONObject("meeting").getJSONObject("type").getString("content"),
+                                requestedJSONObj.getString("sectionNumber"), requestedJSONObj.getString("id"), instructor,
+                                requestedJSONObj.getJSONObject("meetings").getJSONObject("meeting").getString("daysOfTheWeek") +
+                                        requestedJSONObj.getJSONObject("meetings").getJSONObject("meeting").getString("start") + " ~ " +
+                                        requestedJSONObj.getJSONObject("meetings").getJSONObject("meeting").getString("end"));
+                    }
+                }
             } catch (JSONException e) {
-                Log.d("mine", "error is " + e);
+                Log.d("mine", url + " error is " + e);
             }
         }, error -> { Log.d("mine", "error web " + error); });
         queue.add(stringRequest);

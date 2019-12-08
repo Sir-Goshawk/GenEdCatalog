@@ -50,7 +50,7 @@
         android:id="@+id/CourseDescriptionHolder"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Course Description" />
+        android:gravity="center_horizontal"/>
 
     <View
         android:id="@+id/divider"
@@ -144,7 +144,8 @@
         android:id="@+id/LinkedSecionList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:scrollbars="vertical">
 
     </LinearLayout>
 
@@ -152,6 +153,7 @@
         android:id="@+id/LectureList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"></LinearLayout>
+        android:orientation="vertical"
+        android:scrollbars="vertical"></LinearLayout>
 
 </LinearLayout>
