@@ -15,6 +15,27 @@
         android:text="@string/Main_List_title" />
 
     <LinearLayout
+        android:id="@+id/FiltersList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/FilterName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/Filter_Options" />
+
+        <Spinner
+            android:id="@+id/FilterChoice"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:entries="@array/CourseTypes"
+            android:spinnerMode="dropdown" />
+    </LinearLayout>
+
+    <LinearLayout
         android:id="@+id/SubjectList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -23,14 +44,15 @@
         <TextView
             android:id="@+id/SubjectName"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:text="@string/Course_banner" />
 
         <Spinner
             android:id="@+id/SubjectChoice"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:entries="@array/CourseSubjectCode"
+            android:entries="@array/CourseSubjectDisplay"
             android:spinnerMode="dropdown" />
     </LinearLayout>
 

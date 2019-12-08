@@ -41,6 +41,7 @@ public class MainList extends AppCompatActivity {
 
     private String urlBASEend = ".xml";
 
+
     /**
      * What shows up when the app first opens
      * @param savedInstanceState ?
@@ -50,7 +51,6 @@ public class MainList extends AppCompatActivity {
         //The "super" call is required for all activities
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_list);
-
         //The vertical linear layout that will hold course chunks
         courseLists = findViewById(R.id.CourseChunks);
 
@@ -60,12 +60,6 @@ public class MainList extends AppCompatActivity {
                                        final int position, final long id) {
                 courseLists.removeAllViews();
                 requestAPI(urlBASEstart + getResources().getStringArray(R.array.CourseSubjectCode)[position] + urlBASEend);
-//                //Loop through list of courses retrieved from API to populate course chunks on main page
-//                for (int i = 0; i < courseListFromAPI.size(); i++) {
-//                    Log.d("mine", "called");
-//                    Course course = (Course) courseListFromAPI.get(i);
-//                    addChunkCourse(courseChunk, course);
-//                }
             }
             public void onNothingSelected(final AdapterView<?> parent) {
             }
@@ -94,6 +88,7 @@ public class MainList extends AppCompatActivity {
         courseButton.setOnClickListener(unused -> {
             goToCoursePage(courseToAdd);
         });
+//        Log.d("mine", "added: " + courseToAdd.toString());
         courseLists.addView(courseChunk);
     }
 

@@ -214,6 +214,195 @@
         <item>YDSH</item>
     </string-array>
 
+    <string-array name="CourseSubjectDisplay">
+        <item>AAS - Asian American Studies</item>
+        <item>ABE - Agricultural and Biological Engineering</item>
+        <item>ACCY - Accountancy</item>
+        <item>ACE - Agricultural and Consumer Economics</item>
+        <item>ACES - Agricultural, Consumer and Environmental Sciences</item>
+        <item>ADV - Advertising</item>
+        <item>AE - Aerospace Engineering</item>
+        <item>AFAS - Air Force Aerospace Studies</item>
+        <item>AFRO - African American Studies</item>
+        <item>AFST - African Studies</item>
+        <item>AGCM - Agricultural Communications</item>
+        <item>AGED - Agricultural Education</item>
+        <item>AHS - Applied Health Sciences Courses</item>
+        <item>AIS - American Indian Studies</item>
+        <item>ALEC - Agricultural Leadership, Education, and Communications Program</item>
+        <item>ANSC - Animal Sciences</item>
+        <item>ANTH - Anthropology</item>
+        <item>ARAB - Arabic</item>
+        <item>ARCH - Architecture</item>
+        <item>ART - Art</item>
+        <item>ARTD - Art--Design</item>
+        <item>ARTE - Art--Education</item>
+        <item>ARTF - Art--Foundation</item>
+        <item>ARTH - Art--History</item>
+        <item>ARTS - Art--Studio</item>
+        <item>ASRM - Actuarial Science and Risk Management</item>
+        <item>ASST - Asian Studies</item>
+        <item>ASTR - Astronomy</item>
+        <item>ATMS - Atmospheric Sciences</item>
+        <item>BADM - Business Administration</item>
+        <item>BCOG - Brain and Cognitive Science</item>
+        <item>BCS - Bosnian-Croatian-Serbian</item>
+        <item>BIOC - Biochemistry</item>
+        <item>BIOE - Bioengineering</item>
+        <item>BIOL - Biology</item>
+        <item>BIOP - Biophysics</item>
+        <item>BTW - Business and Technical Writing</item>
+        <item>BUS - Business</item>
+        <item>CAS - Center for Advanced Study</item>
+        <item>CB - Comparative Biosciences</item>
+        <item>CDB - Cell and Developmental Biology</item>
+        <item>CEE - Civil and Environmental Engineering</item>
+        <item>CHBE - Chemical and Biomolecular Engineering</item>
+        <item>CHEM - Chemistry</item>
+        <item>CHIN - Chinese</item>
+        <item>CHLH - Community Health</item>
+        <item>CHP - Campus Honors Program Courses</item>
+        <item>CI - Curriculum and Instruction</item>
+        <item>CIC - Committee on Inst Cooperation</item>
+        <item>CLCV - Classical Civilization</item>
+        <item>CMN - Communication</item>
+        <item>CPSC - Crop Sciences</item>
+        <item>CS - Computer Science</item>
+        <item>CSE - Computational Science and Engineering</item>
+        <item>CW - Creative Writing</item>
+        <item>CWL - Comparative and World Literature</item>
+        <item>CZCH - Czech</item>
+        <item>DANC - Dance</item>
+        <item>EALC - East Asian Language and Culture</item>
+        <item>ECE - Electrical and Computer Engineering</item>
+        <item>ECON - Economics</item>
+        <item>EDPR - Educational Practice</item>
+        <item>EDUC - Education</item>
+        <item>EIL - English as an International Language</item>
+        <item>ENG - Engineering</item>
+        <item>ENGH - Engineering Honors</item>
+        <item>ENGL - English</item>
+        <item>ENSU - Environmental Sustainability</item>
+        <item>ENT - Entomology</item>
+        <item>ENVS - Environmental Studies</item>
+        <item>EOL - Educational Organization and Leadership</item>
+        <item>EPOL - Education Policy, Organization and Leadership</item>
+        <item>EPS - Educational Policy Studies</item>
+        <item>EPSY - Educational Psychology</item>
+        <item>ESE - Earth, Society, and Environment</item>
+        <item>ESL - English as a Second Language</item>
+        <item>EURO - European Union Studies</item>
+        <item>FAA - Fine and Applied Arts</item>
+        <item>FIN - Finance</item>
+        <item>FLTE - Foreign Language Teacher Education</item>
+        <item>FR - French</item>
+        <item>FSHN - Food Science and Human Nutrition</item>
+        <item>GC - Graduate College</item>
+        <item>GCL - Grand Challenge Learning</item>
+        <item>GEOG - Geography</item>
+        <item>GEOL - Geology</item>
+        <item>GER - German</item>
+        <item>GLBL - Global Studies</item>
+        <item>GMC - Germanic</item>
+        <item>GRK - Greek</item>
+        <item>GRKM - Modern Greek</item>
+        <item>GS - General Studies</item>
+        <item>GWS - Gender and Women\'s Studies</item>
+        <item>HDFS - Human Development and Family Studies</item>
+        <item>HEBR - Hebrew, Modern and Classical</item>
+        <item>HIST - History</item>
+        <item>HNDI - Hindi</item>
+        <item>HORT - Horticulture</item>
+        <item>HRD - Human Resource Development</item>
+        <item>HT - Health Technology</item>
+        <item>HUM - Humanities Courses</item>
+        <item>IB - Integrative Biology</item>
+        <item>IE - Industrial Engineering</item>
+        <item>IHLT - Interdisciplinary Health Sciences</item>
+        <item>INFO - Informatics</item>
+        <item>IS - Information Sciences</item>
+        <item>ITAL - Italian</item>
+        <item>JAPN - Japanese</item>
+        <item>JOUR - Journalism</item>
+        <item>JS - Jewish Studies</item>
+        <item>KIN - Kinesiology</item>
+        <item>KOR - Korean</item>
+        <item>LA - Landscape Architecture</item>
+        <item>LAS - Liberal Arts and Sciences</item>
+        <item>LAST - Latin American and Caribbean Studies</item>
+        <item>LAT - Latin</item>
+        <item>LAW - Law</item>
+        <item>LEAD - Organizational and Community Leadership</item>
+        <item>LER - Labor and Employment Relations</item>
+        <item>LING - Linguistics</item>
+        <item>LLS - Latina/Latino Studies</item>
+        <item>MACS - Media and Cinema Studies</item>
+        <item>MATH - Mathematics</item>
+        <item>MBA - Regular MBA Program Administration</item>
+        <item>MCB - Molecular and Cell Biology</item>
+        <item>MDIA - Media</item>
+        <item>MDVL - Medieval Studies</item>
+        <item>ME - Mechanical Engineering</item>
+        <item>MFST - Metropolitan Food and Environmental Systems</item>
+        <item>MICR - Microbiology</item>
+        <item>MILS - Military Science</item>
+        <item>MIP - Molecular and Integrative Physiology</item>
+        <item>MSE - Materials Science and Engineering</item>
+        <item>MUS - Music</item>
+        <item>MUSE - Museum Studies</item>
+        <item>NEUR - Neuroscience</item>
+        <item>NPRE - Nuclear, Plasma, and Radiological Engineering</item>
+        <item>NRES - Natural Resources and Environmental Sciences</item>
+        <item>NS - Naval Science</item>
+        <item>NUTR - Nutritional Sciences</item>
+        <item>PATH - Pathobiology</item>
+        <item>PBIO - Plant Biology</item>
+        <item>PERS - Persian</item>
+        <item>PHIL - Philosophy</item>
+        <item>PHYS - Physics</item>
+        <item>PLPA - Plant Pathology</item>
+        <item>POL - Polish</item>
+        <item>PORT - Portuguese</item>
+        <item>PS - Political Science</item>
+        <item>PSM - Professional Science Master\'s Program</item>
+        <item>PSYC - Psychology</item>
+        <item>REES - Russian, East European and Eurasian Studies</item>
+        <item>REHB - Rehabilitation Counseling</item>
+        <item>REL - Religion</item>
+        <item>RHET - Rhetoric and Composition</item>
+        <item>RMLG - Romance Linguistics</item>
+        <item>RST - Recreation, Sport, and Tourism</item>
+        <item>RUSS - Russian</item>
+        <item>SAME - South Asian and Middle Eastern Studies</item>
+        <item>SBC - Strategic Brand Communication</item>
+        <item>SCAN - Scandinavian</item>
+        <item>SE - Systems Engineering and Design</item>
+        <item>SHS - Speech and Hearing Science</item>
+        <item>SLAV - Slavic</item>
+        <item>SLS - Second Language Studies</item>
+        <item>SOC - Sociology</item>
+        <item>SOCW - Social Work</item>
+        <item>SPAN - Spanish</item>
+        <item>SPED - Special Education</item>
+        <item>STAT - Statistics</item>
+        <item>SWAH - Swahili</item>
+        <item>TAM - Theoretical and Applied Mechanics</item>
+        <item>TE - Technology Entrepreneurship</item>
+        <item>THEA - Theatre</item>
+        <item>TMGT - Technology and Management Courses</item>
+        <item>TRST - Translation Studies</item>
+        <item>TSM - Technical Systems Management</item>
+        <item>TURK - Turkish</item>
+        <item>UKR - Ukrainian</item>
+        <item>UP - Urban and Regional Planning</item>
+        <item>VCM - Veterinary Clinical Medicine</item>
+        <item>VM - Veterinary Medicine Courses</item>
+        <item>WGGP - Women and Gender in Global Perspectives Program</item>
+        <item>WLOF - Wolof</item>
+        <item>WRIT - Writing Studies</item>
+        <item>YDSH - Yiddish</item>
+    </string-array>
+
     <string name="Course_page_title"><b>Course Name</b></string>
     <string name="GenEd_Type">GenEd Fullfillments</string>
     <string name="Course_Type">Course Description</string>

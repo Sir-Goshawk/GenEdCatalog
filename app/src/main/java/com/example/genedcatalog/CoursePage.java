@@ -23,14 +23,12 @@ public class CoursePage extends AppCompatActivity {
 
     private Intent courseInfo;
 
-    private ArrayList<String> courseSectionsList;
-
     /**
      * What shows up when the app first opens
      * @param savedInstanceState ?
      */
     protected void onCreate(final Bundle savedInstanceState) {
-//        Log.i(TAG, "Creating");
+        Log.i("mine", "Creating");
         //The "super" call is required for all activities
         super.onCreate(savedInstanceState);
         setContentView(R.layout.course_page);
@@ -59,6 +57,7 @@ public class CoursePage extends AppCompatActivity {
         courseDescriptionHolder.setText(courseInfo.getStringExtra("courseDescription"));
 
         //Adding course sections retrieved from main list into a new array to access the sections to population the chunks later
+        ArrayList<String> courseSectionsList = new ArrayList<>();
         courseSectionsList.add(courseInfo.getStringExtra("courseSection"));
 
         //Populating course section chunks--NEED API FIRST BC THIS USES IT

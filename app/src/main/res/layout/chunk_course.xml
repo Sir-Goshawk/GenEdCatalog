@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/linearLayout"
@@ -9,70 +9,54 @@
 
     <TextView
         android:id="@+id/CourseName"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="@string/Course_page_title"
-        app:layout_constraintBottom_toTopOf="@+id/AttributeLayout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:text="@string/Course_page_title" />
 
     <LinearLayout
         android:id="@+id/AttributeLayout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="16dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:orientation="horizontal">
 
         <TextView
             android:id="@+id/AttributeHolder"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="2"
             android:text="@string/GenEd_Type" />
 
-        <LinearLayout
-            android:layout_width="wrap_content"
+        <TextView
+            android:id="@+id/CourseCode"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_weight="2"
+            android:text="@string/Section_Code" />
 
-            <TextView
-                android:id="@+id/CourseDescription"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:scrollbars="vertical"
-                android:text="@string/Course_Type" />
-
-            <Button
-                android:id="@+id/SelectCourse"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:text="@string/Select_Button" />
-
-        </LinearLayout>
+        <TextView
+            android:id="@+id/CourseDescription"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="5"
+            android:scrollbars="vertical"
+            android:text="@string/Course_Type" />
 
         <TextView
             android:id="@+id/CreditHolder"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:gravity="end"
+            android:gravity="right"
             android:text="@string/Credit_Holder" />
 
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/CourseCode"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/Section_Code"
-        app:layout_constraintBottom_toTopOf="@+id/AttributeLayout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/CourseName"
-        app:layout_constraintTop_toTopOf="parent" />
+    <Button
+        android:id="@+id/SelectCourse"
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:gravity="center"
+        android:text="@string/Select_Button" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>
