@@ -8,14 +8,14 @@ import java.util.ArrayList;
 public class Course {
 
     private String name;
-    private int code;
+    private String code;
     private String genedinfo;
     private String description;
     private int credit;
 
     private ArrayList<String> courseSections;
 
-    public Course(String courseName, int courseCode, String courseGenEdInfo, String courseDescription, int courseCredit, ArrayList<String> courseSec) {
+    public Course(String courseName, String courseCode, String courseGenEdInfo, String courseDescription, int courseCredit, ArrayList<String> courseSec) {
         name = courseName;
         code = courseCode;
         genedinfo = courseGenEdInfo;
@@ -27,7 +27,7 @@ public class Course {
     public String getName() {
         return name;
     }
-    public int getCode() {
+    public String getCode() {
         return code;
     }
     public String getGenEdInfo() {
@@ -36,10 +36,13 @@ public class Course {
     public String getDescription() {
         return description;
     }
-    public int getCredit() {
-        return credit;
+    public String getCredit() {
+        return ""+credit;
     }
     public ArrayList<String> getCourseSection() {
         return courseSections;
+    }
+    public String toString() {
+        return "courseName: " + name + "; courseCode: " + code + "; genEd: " + genedinfo + "; description: " + description + "; credit: " + credit + "; sections: " + courseSections.toString();
     }
 }

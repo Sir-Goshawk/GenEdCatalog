@@ -5,18 +5,16 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.RequestFuture;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
@@ -26,6 +24,7 @@ import org.json.JSONObject;
 import org.json.XML;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
@@ -38,12 +37,9 @@ public class MainList extends AppCompatActivity {
     //List of courses from API
     private List courseListFromAPI = new ArrayList<Course>();
 
-    private JSONObject toReturn;
-
     private String urlBASEstart = "http://courses.illinois.edu/cisapp/explorer/schedule/2020/spring/";
 
     private String urlBASEend = ".xml";
-
 
     /**
      * What shows up when the app first opens
@@ -55,50 +51,31 @@ public class MainList extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_list);
 
-        //Main title view
-        TextView mainTitleHolder = findViewById(R.id.MainTitle);
-
         //The vertical linear layout that will hold course chunks
         courseLists = findViewById(R.id.CourseChunks);
 
-        //The actual chunk that will be filled with course information and added to the course list
-        View courseChunk = getLayoutInflater().inflate(R.layout.chunk_course, courseLists, false);
-
-        //USED TO MAKE SURE UI WORKED: Testing to see if a course chunk will add to the list
-//         requestAPI("http://courses.illinois.edu/cisapp/explorer/schedule/2020.xml");
-//         requestAPI("http://courses.illinois.edu/cisapi/gened.xml");
-        RequestQueue queue = Volley.newRequestQueue(this);
-
-        //Request a string response from the provided URL
-//        String url = "http://courses.illinois.edu/cisapp/explorer/schedule/2012/spring/CS/125.xml";
-        String url = "https://courses.illinois.edu/cisapi/term/2011.xml";
-//        String url = "http://courses.illinois.edu/cisapi/catalog/2012/spring?mode=summary";
-
-        ArrayList<String> subject = new ArrayList<>();
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, url, response -> {
-            try {
-                JSONObject fall2020 = XML.toJSONObject(response);
-//                Log.d("mine", ""+fall2020.getJSONObject("ns2:course").getJSONObject("sections").getJSONArray("section").getJSONObject(1).get("href"));
-            } catch (JSONException e) {
-                Log.d("mine", url + e);
+        Spinner subjectChoices = findViewById(R.id.SubjectChoice);
+        subjectChoices.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            public void onItemSelected(final AdapterView<?> parent, final View view,
+                                       final int position, final long id) {
+                courseLists.removeAllViews();
+                requestAPI(urlBASEstart + getResources().getStringArray(R.array.CourseSubjectCode)[position] + urlBASEend);
+//                //Loop through list of courses retrieved from API to populate course chunks on main page
+//                for (int i = 0; i < courseListFromAPI.size(); i++) {
+//                    Log.d("mine", "called");
+//                    Course course = (Course) courseListFromAPI.get(i);
+//                    addChunkCourse(courseChunk, course);
+//                }
             }
-        }, error -> {
-            int  statusCode = error.networkResponse.statusCode;
-            Log.d("mine", url + " " + error + "code " + statusCode);});
-        queue.add(stringRequest);
-//        requestAPI(url, new JSONObject());
-
-        //Loop through list of courses retrieved from API to populate course chunks on main page
-        for (int i = 0; i < courseListFromAPI.size(); i++) {
-            Course course = (Course) courseListFromAPI.get(i);
-            addChunkCourse(courseChunk, course.getName(), course.getCode(), course.getGenEdInfo(), course.getDescription(), course.getCredit());
-        }
+            public void onNothingSelected(final AdapterView<?> parent) {
+            }
+        });
     }
 
     //Function to be used to populate course chunks
-    private void addChunkCourse(final View courseChunk, final String courseName,
-                                final int courseCode, final String courseGenEdInfo,
-                                final String courseDescription, final int courseCredit) {
+    private void addChunkCourse(final Course courseToAdd) {
+        //The actual chunk that will be filled with course information and added to the course list
+        View courseChunk = getLayoutInflater().inflate(R.layout.chunk_course, courseLists, false);
 
         //Different containers and their contents to be filled;
         TextView courseNameHolder = courseChunk.findViewById(R.id.CourseName);
@@ -108,27 +85,26 @@ public class MainList extends AppCompatActivity {
         TextView courseCreditHolder = courseChunk.findViewById(R.id.CreditHolder);
         Button courseButton = courseChunk.findViewById(R.id.SelectCourse);
 
-        courseNameHolder.setText(courseName);
-        courseCodeHolder.setText(courseCode);
-        courseGenEdinfoHolder.setText(courseGenEdInfo);
-        courseDescriptionHolder.setText(courseDescription);
-        courseCreditHolder.setText("" + courseCredit);
+        courseNameHolder.setText(courseToAdd.getName());
+        courseCodeHolder.setText(courseToAdd.getCode());
+        courseGenEdinfoHolder.setText(courseToAdd.getGenEdInfo());
+        courseDescriptionHolder.setText(courseToAdd.getDescription());
+        courseCreditHolder.setText(courseToAdd.getCredit());
 
         courseButton.setOnClickListener(unused -> {
-            goToCoursePage(courseName, courseCredit, courseCode, courseGenEdInfo, courseDescription);
+            goToCoursePage(courseToAdd);
         });
         courseLists.addView(courseChunk);
     }
 
     //Transfers info to course page
-    private void goToCoursePage(final String courseName, final int courseCredit, final int courseCode,
-                                final String courseGenEdInfo, final String courseDescription) {
+    private void goToCoursePage(final Course toAdd) {
         Intent intent = new Intent(this, CoursePage.class);
-        intent.putExtra("courseName", courseName);
-        intent.putExtra("courseCredit", courseCredit + "");
-        intent.putExtra("courseCode", courseCode);
-        intent.putExtra("courseGenEdInfo", courseGenEdInfo);
-        intent.putExtra("courseDescription", courseDescription);
+        intent.putExtra("courseName", toAdd.getName());
+        intent.putExtra("courseCredit", toAdd.getCredit());
+        intent.putExtra("courseCode", toAdd.getCode());
+        intent.putExtra("courseGenEdInfo", toAdd.getGenEdInfo());
+        intent.putExtra("courseDescription", toAdd.getDescription());
         for (int i = 0; i < courseListFromAPI.size(); i++) {
             Course course = (Course) courseListFromAPI.get(i);
             ArrayList<String> courseSectionList = course.getCourseSection();
@@ -140,47 +116,81 @@ public class MainList extends AppCompatActivity {
         startActivity(intent);
     }
 
-    private String removeBackSlash(String toEdit) {
-        for (int i = 0; i < toEdit.length(); i++) {
-            if (toEdit.charAt(i) == '\\') {
-                toEdit = toEdit.substring(0, i) + toEdit.substring(i + 1);
-            }
-        }
-//        Log.d("mine", "remove is"  +toEdit);
-        return toEdit;
-    }
+    private void requestAPI(final String url) {
 
-    private void requestAPI(final String url, final JSONObject lastResponse) {
-        if (lastResponse == null) {
-            return;
+        if (url == null) {
+            throw new IllegalArgumentException();
         }
-        try {
-            if (lastResponse.get("ns2:course") != null) {
-                courseJSONObject(lastResponse);
-            }
-        } catch (JSONException e) {
-            Log.d("mine", "error " + e);
-        }
-//        RequestFuture<String> test = RequestFuture.newFuture();
         //Instantiate the RequestQueue--gets the Course Explorer API
         RequestQueue queue = Volley.newRequestQueue(this);
 
-        //Request a string response from the provided URL
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url, response -> {
             try {
-                JSONObject fall2020 = XML.toJSONObject(response);
-            Log.d("mine", "resonse " + fall2020.toString(2));
-            } catch (JSONException e) {
-                Log.d("mine", "error " + e);
-            }
-        }, error -> { });
-        // Add the request to the RequestQueue.
-        queue.add(stringRequest);
-        Log.d("mine", "returned " +toReturn);
-        return;
-    }
+                JSONObject requestedJSONObj = XML.toJSONObject(response);
 
-    private void courseJSONObject(final JSONObject courseJSON) {
-        Log.d("mine", "called " + courseJSON);
+                //first JSON node of the given lastResponse
+                Iterator<String> keys = requestedJSONObj.keys();
+                String firstNode = keys.next();
+
+                if (firstNode.equals("ns2:term")) {
+                    //if it's a termXML
+                    JSONArray subjectJSON = requestedJSONObj.getJSONObject(firstNode).getJSONObject("subjects").getJSONArray("subject");
+                    for (int i = 0; i < subjectJSON.length(); i++) {
+                        requestAPI(subjectJSON.getJSONObject(i).getString("href"));
+                    }
+                } else if (firstNode.equals("ns2:subject")) {
+                    //check if it's subjectXML
+                    try {
+                        JSONArray courseJSON = requestedJSONObj.getJSONObject(firstNode).getJSONObject("courses").getJSONArray("course");
+                        for (int i = 0; i < courseJSON.length(); i++) {
+                            JSONObject current = courseJSON.getJSONObject(i);
+                            if (current.getString("href").charAt(current.getString("href").length() - 1) == 'l') {
+                                requestAPI(current.getString("href"));
+                            }
+                        }
+                    } catch (JSONException e) {
+                        Log.d("mine", "rord" + e);
+                        if (requestedJSONObj.getJSONObject(firstNode).getJSONObject("courses").getJSONObject("course").getString("href").
+                                charAt(requestedJSONObj.getJSONObject(firstNode).getJSONObject("courses").getJSONObject("course").getString("href").length() - 1) == 'l') {
+                            requestAPI(requestedJSONObj.getJSONObject(firstNode).getJSONObject("courses").getJSONObject("course").getString("href"));
+                        }
+                    }
+                } else if (firstNode.equals("ns2:course")) {
+                    //check base case, when it's a courseXML, add the genEd Attributes to the genedCourses List
+                    JSONObject subJSON = requestedJSONObj.getJSONObject(firstNode);
+                    try {
+                        if (subJSON.getString("genEdCategories") != null) {
+                            ArrayList<String> subject = new ArrayList<>();
+                            try {
+                                for (int i = 0; i < subJSON.getJSONObject("sections").getJSONArray("section").length(); i++) {
+                                    subject.add(subJSON.getJSONObject("sections").getJSONArray("section").getJSONObject(i).getString("href"));
+                                }
+                            } catch (JSONException e) {
+                                subject.add(subJSON.getJSONObject("sections").getJSONObject("section").getString("href"));
+                            }
+
+                            String genEd = "";
+                            try {
+                                for (int i = 0; i < subJSON.getJSONObject("genEdCategories").getJSONArray("category").length(); i++) {
+                                    genEd += subJSON.getJSONObject("genEdCategories").getJSONArray("category").getJSONObject(i).getString("id") + "\n";
+                                }
+                            } catch (JSONException e) {
+                                genEd += subJSON.getJSONObject("genEdCategories").getJSONObject("category").getString("id") + "\n";
+                            }
+
+                            Course toAdd = new Course(subJSON.getString("label"),
+                                    subJSON.getString("id"),
+                                    genEd,
+                                    subJSON.getString("description"),
+                                    Integer.parseInt(subJSON.getString("creditHours").substring(0, 1)), subject);
+                            addChunkCourse(toAdd);
+                        }
+                    } catch (JSONException e) {}
+                }
+            } catch (JSONException e) {
+                Log.d("mine", "error is " + e);
+            }
+        }, error -> { Log.d("mine", "error web " + error); });
+        queue.add(stringRequest);
     }
 }
