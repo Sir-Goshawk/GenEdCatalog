@@ -25,6 +25,10 @@ public class CoursePage extends AppCompatActivity {
 
     private ArrayList<String> courseSectionsList;
 
+    /**
+     * What shows up when the app first opens
+     * @param savedInstanceState ?
+     */
     protected void onCreate(final Bundle savedInstanceState) {
 //        Log.i(TAG, "Creating");
         //The "super" call is required for all activities
@@ -69,16 +73,16 @@ public class CoursePage extends AppCompatActivity {
     }
 
     /**
-     * This fills linked sections for the selected lecture,
-     * and adds the selected lecture chunk to the top
-     * @param selectedChunk
-     * @param linkedChunk
-     * @param sectionName
-     * @param sectionType
-     * @param sectionCode
-     * @param CRNCode
-     * @param instructorName
-     * @param MeetingTime
+     * The code to fill in the course section chunks.
+     * The code to also add the selected lecture chunk to the selected sections layout.
+     * @param selectedChunk chunk for the selected lecture section
+     * @param linkedChunk chunk for the linked sections of the selected lecture
+     * @param sectionName the name of the selected course
+     * @param sectionType the section type (lecture/discussion/lab)
+     * @param sectionCode the code of the selected course (i.e. would be 125 in CS 125)
+     * @param CRNCode the id of the selected course
+     * @param instructorName the instructor the course
+     * @param MeetingTime the times there are class for this course
      */
     private void addChunkBanner(final View selectedChunk, final View linkedChunk,
                                 final String sectionName, final String sectionType, final int sectionCode,
@@ -110,18 +114,33 @@ public class CoursePage extends AppCompatActivity {
             selectedCourse(selectedChunk, linkedChunk, sectionName, sectionType,
                     sectionCode, CRNCode, instructorName, MeetingTime);
             deselectButton.setVisibility(View.VISIBLE);
+            deselectButton.setOnClickListener(u -> {
+                //remove the selected section
+                selectedSectionLayout.removeView(selectedChunk);
+                //clear the linked list for the selected section
+                linkedSectionLayout.setVisibility(View.INVISIBLE);
+                if (selectedSectionLayout.getChildCount() == 0) {
+                    TextView nonSelectedLectureHolder = findViewById(R.id.NonSelectedSection);
+                    nonSelectedLectureHolder.setVisibility(View.VISIBLE);
+                }
+            });
         });
 
         //USED TO MAKE SURE UI WORKED
 //        selectedCourse(linkedChunk, "ADD", 531975, "Discussion/Recitation", "11-12AM TT", "first, last");
-
-
-        //??????
-        deselectButton.setOnClickListener(unused -> {
-//            selectedSectionLayout.removeView(selectedChunk);
-        });
     }
 
+    /**
+     * The code to fill in the linked section chunks.
+     * The code to also add the selected linked chunk to the selected sections layout.
+     * @param linkedChunk chunk for the linked sections
+     * @param sectionName the name of the linked course
+     * @param sectionType the section type (lecture/discussion/lab)
+     * @param sectionCode the code of the linked course (i.e. would be 125 in CS 125)
+     * @param CRNCode the id of the selected course
+     * @param instructorName the instructor the course
+     * @param MeetingTime the times there are class for this course
+     */
     private void addChunkLinked(final View linkedChunk, final String sectionName,
                                 final String sectionType, final int sectionCode, final int CRNCode,
                                 final String instructorName, final String MeetingTime) {
@@ -156,17 +175,35 @@ public class CoursePage extends AppCompatActivity {
         selectButton.setOnClickListener(unused -> {
             selectedSectionLayout.addView(linkedChunk);
             deselectButton.setVisibility(View.VISIBLE);
+            deselectButton.setOnClickListener(u -> {
+                //remove the selected linked section
+                selectedSectionLayout.removeView(linkedChunk);
+                //clear the linked list for the selected linked section
+                linkedSectionLayout.setVisibility(View.INVISIBLE);
+                if (selectedSectionLayout.getChildCount() == 0) {
+                    TextView nonSelectedLectureHolder = findViewById(R.id.NonSelectedSection);
+                    nonSelectedLectureHolder.setVisibility(View.VISIBLE);
+                }
+            });
         });
         Log.d("Called", "" + linkedSectionLayout.getChildCount());
     }
 
+    /**
+     * Runs when a course is selected.
+     * @param selectedSection chunk for the selected lecture section
+     * @param linkedSection chunk for the linked sections
+     * @param sectionName the name of the selected course
+     * @param sectionType the section type (lecture/discussion/lab)
+     * @param sectionCode the code of the selected course (i.e. would be 125 in CS 125)
+     * @param CRNCode the id of the selected course
+     * @param instructorName the instructor the course
+     * @param MeetingTime the times there are class for this course
+     */
     private void selectedCourse(final View selectedSection, final View linkedSection, final String sectionName,
                                 final String sectionType, final int sectionCode, final int CRNCode,
                                 final String instructorName, final String MeetingTime) {
-        //clear the current linked list
-        linkedSectionLayout.setVisibility(View.INVISIBLE);
-
-        //if a lecture section is selected then you do not have to display the banner
+        //If a lecture section is selected then you do not have to display the banner
         TextView nonSelectedLectureHolder = findViewById(R.id.NonSelectedSection);
         nonSelectedLectureHolder.setVisibility(View.INVISIBLE);
 
