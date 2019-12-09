@@ -4,9 +4,10 @@
     <string name="Filter_Options">Filter Options: </string>
     <string name="action_settings">Settings</string>
     <string name="Course_banner">Avaliable Courses are: </string>
-    <string-array name="CourseTypes">
+    <string name="Term_banner">Spring 2020</string>
+    <string-array name="Course_Names">
+        <item>All</item>
         <item>ACP - Advanced Composition</item>
-        <item>Composition I</item>
         <item>CS - Cultural Studies</item>
             <item>  NW - Non-Western Culture(s)</item>
             <item>  US - US Minority Cultures</item>
@@ -23,6 +24,26 @@
         <item>SBS - Social and Behavioral Sciences</item>
             <item>  BSC - Behavioral Sciences</item>
             <item>  SS - Social Sciences</item>
+    </string-array>
+
+    <string-array name="CourseTypes">
+        <item>ACP</item>
+        <item>CS</item>
+        <item>NW</item>
+        <item>US</item>
+        <item>WCC</item>
+        <item>HUM</item>
+        <item>HP</item>
+        <item>LA</item>
+        <item>NAT</item>
+        <item>LS</item>
+        <item>PS</item>
+        <item>QR</item>
+        <item>QR1</item>
+        <item>QR2</item>
+        <item>SBS</item>
+        <item>BSC</item>
+        <item>SS</item>
     </string-array>
 
     <string-array name="CourseSubjectCode">
@@ -425,6 +446,7 @@ Credit is not given for both HIST 143 and HIST 142. Prerequisite: Completion of 
     <string name="Linked_Course_Banner_CRN">CRN</string>
     <string name="Linked_Course_Banner_Instructor">Instructor</string>
     <string name="Linked_Course_Section_Type">Section Type</string>
+    <string name="Linked_Course_Section_Code">Section Code</string>
     <string name="Linked_Course_Banner_Status">Status</string>
 
     <string name="Term_Example">Spring 2020</string>

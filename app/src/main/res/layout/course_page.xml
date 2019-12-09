@@ -22,6 +22,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:gravity="center_horizontal"
             android:text="@string/Credit_Holder" />
 
         <TextView
@@ -29,6 +30,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:gravity="center_horizontal"
             android:text="@string/Section_Code" />
 
         <TextView
@@ -36,7 +38,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/Term" />
+            android:gravity="center_horizontal"
+            android:text="@string/Term_banner" />
     </LinearLayout>
 
     <TextView
@@ -72,6 +75,46 @@
             android:gravity="center"
             android:text="@string/Selected_Lecture_Section" />
 
+        <LinearLayout
+            android:id="@+id/LinkedBannerSelected"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="4">
+
+            <TextView
+                android:id="@+id/TitleHolderSelected"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_horizontal"
+                android:text="@string/Linked_Course_Section_Type" />
+
+            <TextView
+                android:id="@+id/InstructorHolderSelected"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_horizontal"
+                android:text="@string/Linked_Course_Banner_Instructor" />
+
+            <TextView
+                android:id="@+id/MeetingTimesSelected"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_horizontal"
+                android:text="@string/Linked_Course_Section_Code" />
+
+            <TextView
+                android:id="@+id/CRNHolderSelected"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_horizontal"
+                android:text="@string/Linked_Course_Banner_CRN" />
+        </LinearLayout>
+
         <TextView
             android:id="@+id/NonSelectedSection"
             android:layout_width="match_parent"
@@ -93,31 +136,27 @@
         android:gravity="center"
         android:text="@string/Linked_List_Banner" />
 
-    <View
-        android:id="@+id/divider4"
-        android:layout_width="match_parent"
-        android:layout_height="5dp"
-        android:background="@android:color/darker_gray" />
-
     <LinearLayout
         android:id="@+id/LinkedBanner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:weightSum="4"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:weightSum="4">
 
         <TextView
             android:id="@+id/TitleHolder"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/Linked_Course_Banner_Title" />
+            android:gravity="center_horizontal"
+            android:text="@string/Linked_Course_Section_Type" />
 
         <TextView
             android:id="@+id/InstructorHolder"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:gravity="center_horizontal"
             android:text="@string/Linked_Course_Banner_Instructor" />
 
         <TextView
@@ -125,15 +164,23 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/Linked_Course_Section_Type" />
+            android:gravity="center_horizontal"
+            android:text="@string/Linked_Course_Section_Code" />
 
         <TextView
             android:id="@+id/CRNHolder"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:gravity="center_horizontal"
             android:text="@string/Linked_Course_Banner_CRN" />
     </LinearLayout>
+
+    <View
+        android:id="@+id/divider4"
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:background="@android:color/darker_gray" />
 
     <ScrollView
         android:layout_width="match_parent"

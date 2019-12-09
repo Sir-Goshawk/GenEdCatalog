@@ -12,18 +12,18 @@
         android:weightSum="4">
 
         <TextView
-            android:id="@+id/SectionName"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/Course_page_title" />
-
-        <TextView
             android:id="@+id/sectionType"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/Section_Type" />
+
+        <TextView
+            android:id="@+id/InstructorHolder"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/Instructor_Holder" />
 
         <TextView
             android:id="@+id/SectionCode"
@@ -40,27 +40,13 @@
             android:text="@string/CRN_Holder" />
     </LinearLayout>
 
-    <LinearLayout
+    <TextView
+        android:id="@+id/MeetingTimeHolder"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:weightSum="2">
-
-        <TextView
-            android:id="@+id/InstructorHolder"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/Instructor_Holder" />
-
-        <TextView
-            android:id="@+id/MeetingTimeHolder"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/Meeting_Time_Holder" />
-
-    </LinearLayout>
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center_horizontal"
+        android:text="@string/Meeting_Time_Holder" />
 
     <Button
         android:id="@+id/SelectSection"
@@ -73,5 +59,11 @@
         android:layout_width="match_parent"
         android:layout_height="35dp"
         android:text="@string/Deselect_Button" />
+
+    <View
+        android:id="@+id/divider3"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#00000000" />
 
 </LinearLayout>

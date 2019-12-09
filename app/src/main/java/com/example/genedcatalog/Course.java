@@ -35,13 +35,7 @@ public class Course extends AppCompatActivity {
     public String getCode() {
         return code;
     }
-    public String getGenEdInfo() {
-        String toReturn = "";
-        for (int i = 0; i < genedinfo.size(); i++) {
-            toReturn += genedinfo.get(i) + "\n";
-        }
-        return toReturn;
-    }
+    public ArrayList<String> getGenEdInfo() { return genedinfo;}
     public String getDescription() {
         return description;
     }
@@ -52,7 +46,8 @@ public class Course extends AppCompatActivity {
         return courseSections;
     }
     public String toString() {
-        return "courseName: " + name + "; courseCode: " + code + "; genEd: " + genedinfo + "; description: " + description + "; credit: " + credit + "; sections: " + courseSections.toString();
+        return "courseName: " + name + "; courseCode: " + code + "; genEd: " + genedinfo + "; description: " + description + "; credit: " + credit + "; sections: " + courseSections.toString()
+                + "; genEd" + genEdNames;
     }
     public ArrayList<String> getGenEdNames() {
         return genEdNames;
