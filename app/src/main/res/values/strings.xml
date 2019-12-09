@@ -432,15 +432,6 @@
     <string name="Select_Button">Select Course</string>
     <string name="Select_Section_Button">Select Section</string>
 
-    <string name="Course_page_title_Example"><b>Western Civ Since 1660-ACP</b></string>
-    <string name="GenEd_Type_Example">ACP \nCS - WCC \nHUM - HP</string>
-    <string name="Course_Type_Example">
-Course is identical to HIST 142 except for the additional writing component.
-
-Credit is not given for both HIST 143 and HIST 142. Prerequisite: Completion of campus Composition I General Education requirement.</string>
-    <string name="Section_Code_Example">HIST 143</string>
-    <string name="Credit_Holder_Example">Credit Hours:\n4</string>
-
     <string name="Term">Term Holder</string>
     <string name="Linked_Course_Banner_Title">Title</string>
     <string name="Linked_Course_Banner_CRN">CRN</string>
@@ -448,8 +439,6 @@ Credit is not given for both HIST 143 and HIST 142. Prerequisite: Completion of 
     <string name="Linked_Course_Section_Type">Section Type</string>
     <string name="Linked_Course_Section_Code">Section Code</string>
     <string name="Linked_Course_Banner_Status">Status</string>
-
-    <string name="Term_Example">Spring 2020</string>
 
     <string name="Selected_Lecture_Section">Selected Section:</string>
     <string name="Non_Selected_Section">No Lecture Section Currently Selected</string>
@@ -460,11 +449,4 @@ Credit is not given for both HIST 143 and HIST 142. Prerequisite: Completion of 
     <string name="Meeting_Time_Holder">Meeting Time Holder</string>
     <string name="Linked_List_Banner">Open Sections:</string>
     <string name="Deselect_Button">Deselect</string>
-
-    <string name="Section_Name_Example">HIST 141</string>
-    <string name="Section_Code_Holder_Example">ADD</string>
-    <string name="Section_Type_Example">Discussion/Recitiation</string>
-    <string name="CRN_Holder_Example">35125</string>
-    <string name="Instructor_Holder_Example">Last First</string>
-    <string name="Meeting_Time_Holder_Example">03:00PM - 3:50PM \n<b> Foellinger Auditorium</b></string>
 </resources>

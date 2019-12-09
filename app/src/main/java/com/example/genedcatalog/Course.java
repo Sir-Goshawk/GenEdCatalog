@@ -12,13 +12,13 @@ public class Course extends AppCompatActivity {
     private String code;
     private ArrayList<String> genedinfo;
     private String description;
-    private int credit;
+    private String credit;
     private ArrayList<String> courseSections;
     private ArrayList<String> genEdNames;
 
     public Course(String courseName, String courseCode,
                   ArrayList<String> courseGenEdInfo, String courseDescription,
-                  int courseCredit, ArrayList<String> courseSec,
+                  String courseCredit, ArrayList<String> courseSec,
                   ArrayList<String> courseGenEdNames) {
         name = courseName;
         code = courseCode;
@@ -40,7 +40,7 @@ public class Course extends AppCompatActivity {
         return description;
     }
     public String getCredit() {
-        return ""+credit;
+        return credit;
     }
     public ArrayList<String> getCourseSection() {
         return courseSections;
