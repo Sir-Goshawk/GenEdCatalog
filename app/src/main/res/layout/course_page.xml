@@ -49,7 +49,8 @@
     <TextView
         android:id="@+id/CourseDescriptionHolder"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
+        android:scrollbars="vertical"
         android:gravity="center_horizontal"/>
 
     <View
@@ -102,58 +103,63 @@
         android:id="@+id/LinkedBanner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:weightSum="4"
         android:orientation="horizontal">
 
         <TextView
             android:id="@+id/TitleHolder"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/Linked_Course_Banner_Title" />
 
         <TextView
-            android:id="@+id/CRNHolder"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/Linked_Course_Banner_CRN" />
-
-        <TextView
             android:id="@+id/InstructorHolder"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/Linked_Course_Banner_Instructor" />
 
         <TextView
             android:id="@+id/MeetingTimes"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/Linked_Course_Banner_Instructor" />
+            android:text="@string/Linked_Course_Section_Type" />
 
         <TextView
-            android:id="@+id/StatusHolder"
-            android:layout_width="wrap_content"
+            android:id="@+id/CRNHolder"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/Linked_Course_Banner_Status" />
+            android:text="@string/Linked_Course_Banner_CRN" />
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/LinkedSecionList"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:scrollbars="vertical">
+        android:layout_height="wrap_content">
 
-    </LinearLayout>
+        <LinearLayout
+            android:id="@+id/LinkedSecionList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:scrollbars="vertical">
 
-    <LinearLayout
-        android:id="@+id/LectureList"
+        </LinearLayout>
+
+    </ScrollView>
+
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:scrollbars="vertical"></LinearLayout>
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:id="@+id/LectureList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:scrollbars="vertical"></LinearLayout>
+    </ScrollView>
 
 </LinearLayout>

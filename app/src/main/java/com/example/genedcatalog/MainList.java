@@ -118,8 +118,19 @@ public class MainList extends AppCompatActivity {
                 //first JSON node of the given lastResponse
                 Iterator<String> keys = requestedJSONObj.keys();
                 String firstNode = keys.next();
+                requestedJSONObj = requestedJSONObj.getJSONObject(firstNode);
 
                 if (firstNode.equals("ns2:term")) {
+                    getTermXML(requestedJSONObj);
+                } else if (firstNode.equals("ns2:subject")) {
+                    getSubjectXML(requestedJSONObj);
+                } else if (firstNode.equals("ns2:course")) {
+                    getCourseXML(requestedJSONObj);
+                }
+            } catch (JSONException e) {
+                Log.d("mine", "error is " + e);
+            }
+            /* if (firstNode.equals("ns2:term")) {
                     //if it's a termXML
                     JSONArray subjectJSON = requestedJSONObj.getJSONObject(firstNode).getJSONObject("subjects").getJSONArray("subject");
                     for (int i = 0; i < subjectJSON.length(); i++) {
@@ -178,8 +189,76 @@ public class MainList extends AppCompatActivity {
                 }
             } catch (JSONException e) {
                 Log.d("mine", "error is " + e);
-            }
+            }*/
         }, error -> { Log.d("mine", "error web " + error); });
         queue.add(stringRequest);
+    }
+
+    private void getCourseXML(final JSONObject given) {
+        //check base case, when it's a courseXML, add the genEd Attributes to the genedCourses List
+        try {
+            if (given.getString("genEdCategories") != null) {
+                ArrayList<String> subject = new ArrayList<>();
+                try {
+                    for (int i = 0; i < given.getJSONObject("sections").getJSONArray("section").length(); i++) {
+                        subject.add(given.getJSONObject("sections").getJSONArray("section").getJSONObject(i).getString("href"));
+                    }
+                } catch (JSONException e) {
+                    subject.add(given.getJSONObject("sections").getJSONObject("section").getString("href"));
+                }
+
+                ArrayList<String> genEd = new ArrayList<>();
+                ArrayList<String> genEdNames = new ArrayList<>();
+                try {
+                    for (int i = 0; i < given.getJSONObject("genEdCategories").getJSONArray("category").length(); i++) {
+                        genEd.add(given.getJSONObject("genEdCategories").getJSONArray("category").getJSONObject(i).getString("id"));
+                        genEdNames.add(given.getJSONObject("genEdCategories").getJSONArray("category").getJSONObject(i).getJSONObject("ns2:genEdAttributes").getJSONObject("genEdAttribute").getString("content"));
+                    }
+                } catch (JSONException e) {
+                    genEd.add(given.getJSONObject("genEdCategories").getJSONObject("category").getString("id"));
+                    genEdNames.add(given.getJSONObject("genEdCategories").getJSONObject("ns2:genEdAttributes").getString("genEdAttribute"));
+                }
+
+                Course toAdd = new Course(given.getString("label"),given.getString("id"),genEd,
+                        given.getString("description"),
+                        Integer.parseInt(given.getString("creditHours").substring(0, 1)), subject, genEdNames
+                );
+                addChunkCourse(toAdd);
+            }
+        } catch (JSONException e) {}
+    }
+
+    private void getSubjectXML(final JSONObject given) {
+        //check if it's subjectXML
+        try {
+            JSONArray courseJSONArray = given.getJSONObject("courses").getJSONArray("course");
+            for (int i = 0; i < courseJSONArray.length(); i++) {
+                JSONObject current = courseJSONArray.getJSONObject(i);
+                if (current.getString("href").charAt(current.getString("href").length() - 1) == 'l') {
+                    requestAPI(current.getString("href"));
+                }
+            }
+        } catch (JSONException e) {
+            try {
+                if (given.getJSONObject("courses").getJSONObject("course").getString("href").
+                        charAt(given.getJSONObject("courses").getJSONObject("course").getString("href").length() - 1) == 'l') {
+                    requestAPI(given.getJSONObject("courses").getJSONObject("course").getString("href"));
+                }
+            } catch (JSONException p) {
+                Log.d("mine", p + "rord" + e);
+            }
+        }
+    }
+
+    private void getTermXML(final JSONObject given) {
+        //if it's a termXML
+        try {
+            JSONArray subjectJSON = given.getJSONObject("subjects").getJSONArray("subject");
+            for (int i = 0; i < subjectJSON.length(); i++) {
+                requestAPI(subjectJSON.getJSONObject(i).getString("href"));
+            }
+        } catch (JSONException e) {
+            Log.d("mine", "rord" + e);
+        }
     }
 }
