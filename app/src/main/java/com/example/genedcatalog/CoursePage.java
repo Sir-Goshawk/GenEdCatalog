@@ -45,7 +45,7 @@ public class CoursePage extends AppCompatActivity {
      * @param savedInstanceState ?
      */
     protected void onCreate(final Bundle savedInstanceState) {
-        Log.i("mine", "Creating");
+//        Log.i("mine", "Creating");
         //The "super" call is required for all activities
         super.onCreate(savedInstanceState);
         setContentView(R.layout.course_page);
@@ -73,7 +73,6 @@ public class CoursePage extends AppCompatActivity {
         TextView courseName = findViewById(R.id.CourseNameHolder);
         TextView creditHour = findViewById(R.id.CreditHourHolder);
         TextView courseCode = findViewById(R.id.CourseCodeHolder);
-        TextView courseTerm = findViewById(R.id.TermHolder);
         TextView GenEdHolder = findViewById(R.id.GenEdHolder);
         TextView courseDescriptionHolder = findViewById(R.id.CourseDescriptionHolder);
 
@@ -147,7 +146,7 @@ public class CoursePage extends AppCompatActivity {
                     }
                     linkedSectionLayout.setVisibility(View.GONE);
                     lectureSectionLayout.setVisibility(View.VISIBLE);
-                    Log.d("mine deselect", lectureSectionLayout.getVisibility() + "");
+//                    Log.d("mine deselect", lectureSectionLayout.getVisibility() + "");
                 });
             }
 
@@ -216,7 +215,7 @@ public class CoursePage extends AppCompatActivity {
             requestAPI(getCourseSectionsList.get(i), "other");
         }
 
-        Log.d("mine lecture selected", ""+lectureSectionLayout.getVisibility() + selectedSectionLayout.getChildCount());
+//        Log.d("mine lecture selected", ""+lectureSectionLayout.getVisibility() + selectedSectionLayout.getChildCount());
     }
 
     private void requestAPI(final String url, final String sectionType) {
@@ -255,7 +254,7 @@ public class CoursePage extends AppCompatActivity {
                     } catch (JSONException p) {
                         //Else
                         instructor = requestedJSONObj.getJSONObject("meetings").getJSONObject("meeting").getString("instructors");
-                        Log.d("mine all else", url + p + instructor);
+//                        Log.d("mine all else", url + p + instructor);
                     }
                 }
 
@@ -330,9 +329,9 @@ public class CoursePage extends AppCompatActivity {
                     }
                 }
             } catch (JSONException e) {
-                Log.d("mine", url + " error is " + e);
+//                Log.d("mine", url + " error is " + e);
             }
-        }, error -> { Log.d("mine", "error web " + error); });
+        }, error -> { /*Log.d("mine", "error web " + error);*/ });
         queue.add(stringRequest);
     }
 }

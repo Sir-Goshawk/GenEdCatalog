@@ -29,21 +29,21 @@
     <string-array name="CourseTypes">
         <item>ACP</item>
         <item>CS</item>
-        <item>NW</item>
-        <item>US</item>
-        <item>WCC</item>
+        <item>1NW</item>
+        <item>1US</item>
+        <item>1WCC</item>
         <item>HUM</item>
-        <item>HP</item>
-        <item>LA</item>
+        <item>1HP</item>
+        <item>1LA</item>
         <item>NAT</item>
-        <item>LS</item>
-        <item>PS</item>
+        <item>1LS</item>
+        <item>1PS</item>
         <item>QR</item>
-        <item>QR1</item>
-        <item>QR2</item>
+        <item>1QR1</item>
+        <item>1QR2</item>
         <item>SBS</item>
-        <item>BSC</item>
-        <item>SS</item>
+        <item>1BSC</item>
+        <item>1SS</item>
     </string-array>
 
     <string-array name="CourseSubjectCode">

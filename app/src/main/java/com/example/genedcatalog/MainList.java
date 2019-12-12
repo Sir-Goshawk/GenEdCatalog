@@ -28,10 +28,10 @@ import java.util.Iterator;
 
 public class MainList extends AppCompatActivity {
 
-    private static final String TAG = "MainList";
-
+    //LinearLayout that populates the courses to display
     private LinearLayout courseLists;
 
+    //This app now only display
     private String urlBASEstart = "http://courses.illinois.edu/cisapp/explorer/schedule/2020/spring/";
 
     private String urlBASEend = ".xml";
@@ -43,7 +43,7 @@ public class MainList extends AppCompatActivity {
      * @param savedInstanceState ?
      */
     protected void onCreate(final Bundle savedInstanceState) {
-        Log.i(TAG, "creating");
+//        Log.d("MainList mine", "creating");
         //The "super" call is required for all activities
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_list);
@@ -59,7 +59,7 @@ public class MainList extends AppCompatActivity {
                 courseLists.removeAllViews();
                 coursesToAdd.clear();
                 //App then sends an API reqeust to server, with the given url
-                requestAPI(urlBASEstart + getResources().getStringArray(R.array.CourseSubjectCode) + urlBASEend);
+                requestAPI(urlBASEstart + getResources().getStringArray(R.array.CourseSubjectCode)[position] + urlBASEend);
             }
             public void onNothingSelected(final AdapterView<?> parent) {
             }
@@ -108,7 +108,9 @@ public class MainList extends AppCompatActivity {
         //courseGenEdinfoHolder will be given an ArrayList, so it needs to be formatted
         String genEdInfo = "";
         for (int i = 0; i < courseToAdd.getGenEdInfo().size(); i++) {
-            genEdInfo += courseToAdd.getGenEdInfo().get(i) + "\n";
+            if (courseToAdd.getGenEdInfo().get(i).charAt(0) != '1') {
+                genEdInfo += courseToAdd.getGenEdInfo().get(i) + "\n";
+            }
         }
         courseGenEdinfoHolder.setText(genEdInfo);
         courseDescriptionHolder.setText(courseToAdd.getDescription());
@@ -146,7 +148,7 @@ public class MainList extends AppCompatActivity {
      */
     private void filterGenEds(final String chosenGenEd) {
         //This loops through the courses displayed on screen
-        for (int i = 0; i < courseLists.getChildCount(); i++) {
+        for (int i = 0; i < coursesToAdd.size(); i++) {
             //if the course at courseToAdd(same position with courseList) has the said genEd attribute, then it sets the course to visible
             if (coursesToAdd.get(i).getGenEdInfo().contains(chosenGenEd)) {
                 courseLists.getChildAt(i).setVisibility(View.VISIBLE);
@@ -154,6 +156,7 @@ public class MainList extends AppCompatActivity {
                 //else it sets to gone, since it doesn't have the genEd attribute
                 courseLists.getChildAt(i).setVisibility(View.GONE);
             }
+            Log.d("mine fikter" , coursesToAdd.get(i).getGenEdInfo().toString());
         }
 
     }
@@ -172,6 +175,7 @@ public class MainList extends AppCompatActivity {
 
         //starts a string request
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url, response -> {
+            Log.d("mine requested", url);
             //Everything is in a try-catch block because it may run into a JSONException
             try {
                 //This converts the given String response, in a XML format, into a JSONObject
@@ -182,7 +186,7 @@ public class MainList extends AppCompatActivity {
                 String firstNode = keys.next();
                 //The subJSONObject that is nested within the requestedJSONObj
                 requestedJSONObj = requestedJSONObj.getJSONObject(firstNode);
-                Log.d("mine", url);
+//                Log.d("mine", url);
 
                 if (firstNode.equals("ns2:term")) {
                     //if it's a termXML, the first type of XML to request from server
@@ -211,75 +215,90 @@ public class MainList extends AppCompatActivity {
                     //check base case, when it's a courseXML, add the genEd Attributes to the genedCourses List
                     try {
                         //If the course has "genEdCategories", if it does not, then there's no need to request further infomation
-                        if (requestedJSONObj.getString("genEdCategories") != null) {
-                            //"section" ArrayList contains all the sections within the course
-                            ArrayList<String> sections = new ArrayList<>();
-                            try {
-                                //If there's many sections within the course, the JSON element "sections" will contain a JSONArray called "section"
-                                for (int i = 0; i < requestedJSONObj.getJSONObject("sections").getJSONArray("section").length(); i++) {
-                                    //Now it loops through the array and get every section url within
-                                    sections.add(requestedJSONObj.getJSONObject("sections").getJSONArray("section").getJSONObject(i).getString("href"));
-                                }
-                            } catch (JSONException e) {
-                                //If there's only one section then the API only gets one url
-                                sections.add(requestedJSONObj.getJSONObject("sections").getJSONObject("section").getString("href"));
+                        //"section" ArrayList contains all the sections within the course
+                        ArrayList<String> sections = new ArrayList<>();
+                        getValues(requestedJSONObj, "sections", "sections", "section", sections);
+//                        try {
+//                            //If there's many sections within the course, the JSON element "sections" will contain a JSONArray called "section"
+//                            for (int i = 0; i < requestedJSONObj.getJSONObject("sections").getJSONArray("section").length(); i++) {
+//                                //Now it loops through the array and get every section url within
+//                                sections.add(requestedJSONObj.getJSONObject("sections").getJSONArray("section").getJSONObject(i).getString("href"));
+//                            }
+//                        } catch (JSONException e) {
+//                            //If there's only one section then the API only gets one url
+//                            sections.add(requestedJSONObj.getJSONObject("sections").getJSONObject("section").getString("href"));
+//                        }
+
+                        //"genEd" ArrayList will contain all the short-hand code from genEds, it will be used for filtering
+                        ArrayList<String> genEd = new ArrayList<>();
+                        //"genEdNames" ArrayList will contain all the names from genEds, it will be used for display
+                        ArrayList<String> genEdNames = new ArrayList<>();
+                        try {
+                            //If there's many genEd attributes within the course, the JSON element "genEdCategories" will contain a JSONArray called "category"
+                            for (int i = 0; i < requestedJSONObj.getJSONObject("genEdCategories").getJSONArray("category").length(); i++) {
+                                //Now it loops through the array and add every genEd attribute to "genEd"
+                                genEd.add(requestedJSONObj.getJSONObject("genEdCategories").getJSONArray("category").getJSONObject(i).getString("id"));
+                                genEd.add(requestedJSONObj.getJSONObject("genEdCategories").getJSONArray("category").getJSONObject(i).getJSONObject("ns2:genEdAttributes").getJSONObject("genEdAttribute").getString("code"));
+                                //Now it loops through the array and add every genEdNames attribute to "genEdNames" within a JSONObject "genEdAttributes"
+                                genEdNames.add(requestedJSONObj.getJSONObject("genEdCategories").getJSONArray("category").getJSONObject(i).getJSONObject("ns2:genEdAttributes").getJSONObject("genEdAttribute").getString("content"));
                             }
+                        } catch (JSONException e) {
+                            //If there's only one genEd Attribute then "genEd" and "genEdNames" only adds one object
+                            genEd.add(requestedJSONObj.getJSONObject("genEdCategories").getJSONObject("category").getString("id"));
+                            genEdNames.add(requestedJSONObj.getJSONObject("genEdCategories").getJSONObject("category").getJSONObject("ns2:genEdAttributes").getJSONObject("genEdAttribute").getString("content"));
+                            genEd.add(requestedJSONObj.getJSONObject("genEdCategories").getJSONObject("category").getJSONObject("ns2:genEdAttributes").getJSONObject("genEdAttribute").getString("code"));
+                        }
 
-                            //"genEd" ArrayList will contain all the short-hand code from genEds, it will be used for filtering
-                            ArrayList<String> genEd = new ArrayList<>();
-                            //"genEdNames" ArrayList will contain all the names from genEds, it will be used for display
-                            ArrayList<String> genEdNames = new ArrayList<>();
-                            try {
-                                //If there's many genEd attributes within the course, the JSON element "genEdCategories" will contain a JSONArray called "category"
-                                for (int i = 0; i < requestedJSONObj.getJSONObject("genEdCategories").getJSONArray("category").length(); i++) {
-                                    //Now it loops through the array and add every genEd attribute to "genEd"
-                                    genEd.add(requestedJSONObj.getJSONObject("genEdCategories").getJSONArray("category").getJSONObject(i).getString("id"));
-                                    //Now it loops through the array and add every genEdNames attribute to "genEdNames" within a JSONObject "genEdAttributes"
-                                    genEdNames.add(requestedJSONObj.getJSONObject("genEdCategories").getJSONArray("category").getJSONObject(i).getJSONObject("ns2:genEdAttributes").getJSONObject("genEdAttribute").getString("content"));
-                                }
-                            } catch (JSONException e) {
-                                //If there's only one genEd Attribute then "genEd" and "genEdNames" only adds one object
-                                genEd.add(requestedJSONObj.getJSONObject("genEdCategories").getJSONObject("category").getString("id"));
-                                genEdNames.add(requestedJSONObj.getJSONObject("genEdCategories").getJSONObject("ns2:genEdAttributes").getString("genEdAttribute"));
-                            }
+                        //Creates a new Course Object called "toAdd", with the courseName: requestedJSONObj.getString("label"); courseCode: requestedJSONObj.getString("id";
+                        //                                                                  courseGenEdInfo: genEd; courseDescription: requestedJSONObj.getString("description");
+                        //                                                                  courseCredit: requestedJSONObj.getString("creditHours"); courseSec: sections; courseGenEdNames: genEdName
+                        Course toAdd = new Course(requestedJSONObj.getString("label"),
+                                requestedJSONObj.getString("id"),
+                                genEd,
+                                requestedJSONObj.getString("description"),
+                                requestedJSONObj.getString("creditHours").substring(0, 1),
+                                sections,
+                                genEdNames
+                        );
+                        //This addes a course chunk to display via addChunkCourse
+                        addChunkCourse(toAdd);
+                        //This adds a course to the courseToAdd
+                        coursesToAdd.add(toAdd);
 
-                            //Creates a new Course Object called "toAdd", with the courseName: requestedJSONObj.getString("label"); courseCode: requestedJSONObj.getString("id";
-                            //                                                                  courseGenEdInfo: genEd; courseDescription: requestedJSONObj.getString("description");
-                            //                                                                  courseCredit: requestedJSONObj.getString("creditHours"); courseSec: sections; courseGenEdNames: genEdName
-                            Course toAdd = new Course(requestedJSONObj.getString("label"),
-                                    requestedJSONObj.getString("id"),
-                                    genEd,
-                                    requestedJSONObj.getString("description"),
-                                    requestedJSONObj.getString("creditHours").substring(0, 1),
-                                    sections,
-                                    genEdNames
-                            );
-                            //This addes a course chunk to display via addChunkCourse
-                            addChunkCourse(toAdd);
-                            //This adds a course to the courseToAdd
-                            coursesToAdd.add(toAdd);
-
-                            //If the subject has no courses with genEds, or the server hasn't publish the information yet, it will display a textview and ask the user to change a selection for subject
-                            TextView errorMessage = new TextView(this);
-                            errorMessage.setText("Looks like there aren't any published courses that fulfills GenEd Requirements\nplease try another sections");
-                            errorMessage.setGravity(Gravity.CENTER);
+                        //If the subject has no courses with genEds, or the server hasn't publish the information yet, it will display a textview and ask the user to change a selection for subject
+                        TextView errorMessage = new TextView(this);
+                        errorMessage.setText("Looks like there aren't any published courses that fulfills GenEd Requirements\nplease try another subject");
+                        errorMessage.setGravity(Gravity.CENTER);
+                        if (courseLists.getChildCount() == 0) {
+                            //If the courseList isn't populated, then the message displays
                             courseLists.addView(errorMessage);
-                            if (courseLists.getChildCount() == 0) {
-                                //If the courseList isn't populated, then the message displays
-                                errorMessage.setVisibility(View.VISIBLE);
-                            } else {
-                                //If there are elements, then the message goes away
-                                errorMessage.setVisibility(View.GONE);
-                            }
+                        } else {
+                            //If there are elements, then the message goes away
+                            courseLists.removeView(errorMessage);
                         }
                     } catch (JSONException e) {}
                 }
             } catch (JSONException e) {
-//                Log.d("mine", "error is " + e);
+                Log.d("mine", "error is " + e);
             }
-        }, error -> { /*Log.d("mine", "error web " + error);*/ });
+        }, error -> { Log.d("mine", "error web " + error); });
 
         //Sends a request to server
         queue.add(stringRequest);
+    }
+
+    private void getValues(final JSONObject requestedJSONObj, final String type, final String firstName, final String secondName, final ArrayList given) {
+        try {
+            try {
+                //If there's many sections within the course, the JSON element "sections" will contain a JSONArray called "section"
+                for (int i = 0; i < requestedJSONObj.getJSONObject(firstName).getJSONArray(secondName).length(); i++) {
+                    //Now it loops through the array and get every section url within
+                    given.add(requestedJSONObj.getJSONObject(firstName).getJSONArray(secondName).getJSONObject(i).getString("href"));
+                }
+            } catch (JSONException e) {
+                //If there's only one section then the API only gets one url
+                given.add(requestedJSONObj.getJSONObject(firstName).getJSONObject(secondName).getString("href"));
+            }
+        } catch (JSONException e) { }
     }
 }
